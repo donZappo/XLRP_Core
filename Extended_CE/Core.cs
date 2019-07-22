@@ -9,6 +9,13 @@ using BattleTech.UI;
 
 namespace Extended_CE
 {
+    public enum DifficultySetting
+    {
+        Normal = 0,
+        Hard = 21,
+        Simulation = 42
+    }
+
     public static class Core
     {
         #region Init

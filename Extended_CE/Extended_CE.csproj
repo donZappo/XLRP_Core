@@ -32,13 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\..\..\..\References\0Harmony.dll</HintPath>
+      <HintPath>C:\References\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\..\References\Assembly-CSharp.dll</HintPath>
+      <HintPath>C:\References\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\..\References\Newtonsoft.Json.dll</HintPath>
+      <HintPath>C:\References\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -47,16 +47,18 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\..\..\..\References\UnityEngine.dll</HintPath>
+      <HintPath>C:\References\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\References\UnityEngine.UI.dll</HintPath>
+      <HintPath>C:\References\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BulwarkPatch.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="DifficultySettings.cs" />
+    <Compile Include="HardPilotSelection.cs" />
+    <Compile Include="HardResolve.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="ModSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -239,6 +241,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\BT_Extended_CE" /Y</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
