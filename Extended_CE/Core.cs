@@ -5,6 +5,7 @@ using Harmony;
 using Newtonsoft.Json;
 using static Extended_CE.Logger;
 using BattleTech;
+using BattleTech.UI;
 
 namespace Extended_CE
 {
@@ -78,6 +79,50 @@ namespace Extended_CE
                 stats.ModifyStat<int>("SimGame", 0, "MechTechSkill", StatCollection.StatOperation.Int_Add, MechTechSkillChange, -1, true);
                 __instance.CompanyTags.Add("Extended_CE_Initialized");
             }
+        }
+    }
+
+    [HarmonyPatch(typeof(SimGameDifficultySettingsModule), "SaveSettings")]
+    public static class SGDSM_SaveSettings_Patch
+    {
+        public static int Difficulty;
+        public static int Morale;
+        public static int MechTechSkill;
+        public static int MedTechSkill;
+
+        public static void Prefix()
+        {
+            try
+            {
+                StoryConstantsDef simConstants = UnityGameInstance.BattleTechGame.Simulation.Constants.Story;
+                SimGameState sim = UnityGameInstance.BattleTechGame.Simulation;
+                Difficulty = simConstants.MaximumDebt;
+                Morale = simConstants.StartingMorale;
+                MechTechSkill = simConstants.StartingMechTechSkill;
+                MedTechSkill = simConstants.StartingMedTechSkill;
+            }
+            catch { }
+        }
+        public static void Postfix()
+        {
+            try
+            {
+                StoryConstantsDef simConstants = UnityGameInstance.BattleTechGame.Simulation.Constants.Story;
+                SimGameState sim = UnityGameInstance.BattleTechGame.Simulation;
+                if (sim.CompanyTags.Contains("Extended_CE_Initialized") && Difficulty != simConstants.MaximumDebt)
+                {
+                    var MoraleChange = simConstants.StartingMorale - Morale;
+                    var MechTechSkillChange = simConstants.StartingMechTechSkill - MechTechSkill;
+                    var MedTechSkillChange = simConstants.StartingMedTechSkill - MedTechSkill;
+
+                    var stats = sim.CompanyStats;
+                    stats.ModifyStat<int>("SimGame", 0, "Morale", StatCollection.StatOperation.Int_Add, MoraleChange, -1, true);
+                    stats.ModifyStat<int>("SimGame", 0, "MechTechSkill", StatCollection.StatOperation.Int_Add, MechTechSkillChange, -1, true);
+                    stats.ModifyStat<int>("SimGame", 0, "MedTechSkill", StatCollection.StatOperation.Int_Add, MedTechSkillChange, -1, true);
+                    sim.RoomManager.RefreshDisplay();
+                }
+            }
+            catch { }
         }
     }
 }
