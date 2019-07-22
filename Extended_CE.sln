@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extended_CE", "Extended_CE.dll\Extended_CE.csproj", "{21C33980-2E59-454D-AFBF-B0A8B95B1F54}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extended_CE", "Extended_CE\Extended_CE.csproj", "{21C33980-2E59-454D-AFBF-B0A8B95B1F54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
