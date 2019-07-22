@@ -1,0 +1,23 @@
+{
+    "Name": "BT_Extended_CE",
+    "Enabled": true,
+	
+    "DependsOn": [ "BT_Extended_Overrides" ],
+	
+    "OptionallyDependsOn": [ "Galaxy at War", "PermanentEvasion", "Repair Tonnage and Finances" ],
+	
+    "Version": "1.6.0.0",
+
+    "Author": "Haree78",
+
+    "DependsOn": [],
+    "ConflictsWith": [],
+	
+	"DLL": "Extended_CE.dll",
+
+    "Manifest": [
+		{ "Type": "AbilityDef", "Path": "abilities", "ShouldMergeJSON": true  },
+		{ "Type": "AmmunitionBoxDef", "Path": "ammunitionBox", "AddToDB": true },
+		{ "Type": "WeaponDef", "Path": "weapon", "AddToDB": true }
+    ]
+}

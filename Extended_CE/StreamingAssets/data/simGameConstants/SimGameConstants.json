@@ -1,0 +1,26 @@
+{
+   "Finances" : {
+		"MechWarriorBaseCostPerPoint" : 1400.0,
+		"MechWarriorBonusCostPerPoint" : 700.0,
+		"LeopardBaseMaintenanceCost" : 60000,
+		"ArgoBaseMaintenanceCost" : 70000,
+		"QuartersYouCanAffordWithoutTriggeringWarning" : 0,
+	},
+   "Story" : {
+		"StartingMechTechSkill" : 3000,
+   },
+   "MechLab" :{
+		"StructureRepairTechPoints" : 20,
+		"ComponentRepairTechPoints" : 2000,
+		"BallisticInstallTechPoints" : 5000,
+		"MissileInstallTechPoints" : 5000,
+		"EnergyInstallTechPoints" : 5000,
+		"APInstallTechPoints" : 2500,
+		"AmmoInstallTechPoints" : 2500,
+		"JumpJetInstallTechPoints" : 2500,
+		"HeatSinkInstallTechPoints" : 2500,
+		"ArmorInstallTechPoints" : 0,
+		"OtherInstallTechPoints" : 2500,
+		"UninstallTechPoints" : 0,
+   },
+}
