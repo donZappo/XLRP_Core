@@ -38,7 +38,7 @@ namespace Extended_CE.PilotSelection
                          */
 
                         // Add the Tags we want
-                        MechDef mechDef = dataManager.MechDefs.Get("__instance.selectedUnitDefId");
+                        MechDef mechDef = dataManager.MechDefs.Get(__instance.selectedUnitDefId);
                         TagSet excludeTags = new TagSet();
 
 
