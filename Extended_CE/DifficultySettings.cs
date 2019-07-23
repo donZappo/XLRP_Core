@@ -18,8 +18,11 @@ namespace Extended_CE
         {
             public static void Postfix(ref float __result)
             {
-                if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == 42)
-                __result += Core.Settings.SimSensorDistance;
+                if (UnityGameInstance.BattleTechGame.Simulation != null)
+                {
+                    if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                        __result += Core.Settings.SimSensorDistance;
+                }
             }
         }
 
@@ -28,8 +31,11 @@ namespace Extended_CE
         {
             public static void Postfix(ref float __result)
             {
-                if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == 42)
-                    __result += Core.Settings.SimSpotterDistance;
+                if (UnityGameInstance.BattleTechGame.Simulation != null)
+                {
+                    if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                        __result += Core.Settings.SimSpotterDistance;
+                }
             }
         }
     }
