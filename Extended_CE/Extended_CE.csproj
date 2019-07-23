@@ -63,6 +63,7 @@
     <Compile Include="ModSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveHandling.cs" />
+    <Compile Include="SkillChanges.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="abilities\AbilityDefGu5.json" />
