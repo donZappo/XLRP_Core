@@ -16,6 +16,7 @@ namespace Extended_CE
         public int NormalMechTechSkill = 3000;
 
         public float CSMasteryNerf = 0.85f;
+        public int LessResolveAtMaxMorale = 5;
 
     }
 }

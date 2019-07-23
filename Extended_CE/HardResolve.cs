@@ -74,4 +74,34 @@ namespace Extended_CE.HardResolveChanges
             }
         }
     }
+
+
+    // Apply Hard mode less resolve at max gain from morale
+    [HarmonyPatch(typeof(Team), "CollectSimGameBaseline")]
+    public static class Team_CollectSimGameBaseline
+    {
+        static void Postfix(Team __instance, int __result, MoraleConstantsDef moraleConstants)
+        {
+            try
+            {
+                if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
+                UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                {
+                    if (moraleConstants.BaselineAddFromSimGame)
+                    {
+                        int maxMorale = moraleConstants.BaselineAddFromSimGameThresholds[moraleConstants.BaselineAddFromSimGameThresholds.Length - 1];
+
+                        if (__result == maxMorale)
+                        {
+                            __result -= Core.Settings.LessResolveAtMaxMorale;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e);
+            }
+        }
+    }
 }
