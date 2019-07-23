@@ -80,7 +80,7 @@ namespace Extended_CE.HardResolveChanges
     [HarmonyPatch(typeof(Team), "CollectSimGameBaseline")]
     public static class Team_CollectSimGameBaseline
     {
-        static void Postfix(Team __instance, int __result, MoraleConstantsDef moraleConstants)
+        static void Postfix(Team __instance, ref int __result, MoraleConstantsDef moraleConstants)
         {
             try
             {
