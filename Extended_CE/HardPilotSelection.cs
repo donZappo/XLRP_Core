@@ -124,10 +124,14 @@ namespace Extended_CE.PilotSelection
                                 // Excluding Gunnery 5 if we don't have Piloting 8
                                 excludeTags.Add("pilot_npc_striker");
                                 excludeTags.Add("pilot_npc_gladiator");
+                            }
 
+                            if(!mechDef.MechTags.Contains("unit_armor_high"))
+                            {
                                 if (!mechDef.MechTags.Contains("unit_hot"))
                                 {
-                                    // Let's throw away Coolant Vent in non hot mechs to improve chances of a more appropriate skills
+                                    // We aren't high armour, we are fast, and we aren't hot
+                                    // Let's throw away Coolant Vent in non hot mechs to improve chances of more appropriate skills
                                     excludeTags.Add("pilot_npc_brawler");
                                     excludeTags.Add("pilot_npc_sentinel");
                                 }
