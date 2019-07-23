@@ -56,13 +56,21 @@ namespace Extended_CE.PilotSelection
                         // Brawlers
                         if (mechDef.MechTags.Contains("unit_role_brawler"))
                         {
-                            // Excluding tier 2 pilots that have no survivability skills in brawlers
+                            // Excluding tier 2 pilots that have no or next to no survivability skills in brawlers
                             excludeTags.Add("pilot_npc_sharpshooter");
+                            excludeTags.Add("pilot_npc_skirmisher");
 
                             if (!mechDef.MechTags.Contains("unit_speed_high"))
                             {
                                 // We aren't fast, get rid of shoot and move with no additional survivability
                                 excludeTags.Add("pilot_npc_striker");
+                            }
+
+                            if (mechDef.MechTags.Contains("unit_speed_low") &&
+                                !mechDef.MechTags.Contains("unit_jumpOK"))
+                            {
+                                // We are slow, can't jump and want to brawl, tactics 8 with Piloting 5 will not be enough for us to live on
+                                excludeTags.Add("pilot_npc_scout");
                             }
                         }
 
