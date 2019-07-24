@@ -16,8 +16,9 @@ namespace Extended_CE.PilotSelection
     {
         static bool Prefix(UnitSpawnPointOverride __instance, ref LoadRequest request, MetadataDatabase mdd, string lanceName, int unitIndex)
         {
-            if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
-                UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+            if (UnityGameInstance.BattleTechGame.Simulation != null &&
+                (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
+                UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation))
             {
                 try
                 {

@@ -12,9 +12,9 @@ namespace Extended_CE.SkillChanges
     [HarmonyPatch(typeof(MessageCenter), "PublishMessage")]
     public static class MessageCenter_PublishMessage
     {
-        public static void Prefex(ref MessageCenterMessage message)
+        public static void Prefix(ref MessageCenterMessage message)
         {
-            if(message is FloatieMessage floatie)
+            if (message is FloatieMessage floatie)
             {
                 if(floatie.text.ToString() == "ACE PILOT")
                 {

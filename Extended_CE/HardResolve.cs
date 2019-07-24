@@ -17,8 +17,9 @@ namespace Extended_CE.HardResolveChanges
         {
             try
             {
-                if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
-                UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                if (UnityGameInstance.BattleTechGame.Simulation != null &&
+                    (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
+                    UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation))
                 {
                     if (__instance.ParentActor is Mech mech)
                     {
@@ -84,8 +85,9 @@ namespace Extended_CE.HardResolveChanges
         {
             try
             {
-                if (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
-                UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                if (UnityGameInstance.BattleTechGame.Simulation != null &&
+                    (UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Hard ||
+                    UnityGameInstance.BattleTechGame.Simulation.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation))
                 {
                     if (moraleConstants.BaselineAddFromSimGame)
                     {
