@@ -59,6 +59,7 @@
     <Compile Include="DifficultySettings.cs" />
     <Compile Include="HardPilotSelection.cs" />
     <Compile Include="HardResolve.cs" />
+    <Compile Include="Hit Chance.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="ModSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
