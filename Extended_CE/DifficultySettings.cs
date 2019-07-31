@@ -38,5 +38,33 @@ namespace Extended_CE
                 }
             }
         }
+
+        [HarmonyPatch(typeof(SGShipModuleUpgradeViewPopulator), "Populate")]
+        public static class SGShipModuleUpgradeViewPopulator_Populate_Patch
+        {
+            static string DetailHolder;
+            static SimGameState sim = UnityGameInstance.BattleTechGame.Simulation;
+            public static void Prefix(ShipModuleUpgrade upgrade)
+            {
+                if (sim.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                {
+                    if (upgrade.Description.Id == "argoUpgrade_mechBay_machineShop")
+                    {
+                        DetailHolder = upgrade.Description.Details;
+                        Traverse.Create(upgrade.Description).Property("Details").SetValue("Maintaining 'Mechs in the Succession War era is complicated by the relative rarity of precision-manufactured parts. The <i>Argo</i>'s machine shop, once repaired and brought online, can help address this lack.");
+                    }
+                }
+            }
+            public static void Postfix(ShipModuleUpgrade upgrade)
+            {
+                if (sim.Constants.Story.MaximumDebt == (int)DifficultySetting.Simulation)
+                {
+                    if (upgrade.Description.Id == "argoUpgrade_mechBay_machineShop")
+                    {
+                        Traverse.Create(upgrade.Description).Property("Details").SetValue(DetailHolder);
+                    }
+                }
+            }
+        }
     }
 }
