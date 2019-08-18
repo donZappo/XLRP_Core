@@ -27,7 +27,9 @@ namespace Extended_CE.PilotSelection
                     if (__instance.pilotDefId == UnitSpawnPointGameLogic.PilotDef_Tagged &&
                         __instance.selectedUnitType == UnitType.Mech &&
                         __instance.selectedUnitDefId != UnitSpawnPointGameLogic.MechDef_None &&
-                        dataManager != null)
+                        dataManager != null &&
+                        __instance.pilotTagSet.IsEmpty &&
+                        __instance.pilotExcludedTagSet.IsEmpty)
                     {
                         Logger.Log($"Adding Exclusions to pilot: {__instance.pilotDefId}, for lance: {lanceName}, unit index: {unitIndex}, in Mech: {__instance.selectedUnitDefId}");
                         /*
@@ -146,27 +148,21 @@ namespace Extended_CE.PilotSelection
                                 }
                             }
                         }
-
-                        // If the lancedef had pilot includes lets make sure we aren't excluding those.
-                        foreach (string include in __instance.pilotTagSet)
-                        {
-                            while (excludeTags.Remove(include)) ;
-                        }
-
+                        /*
                         Logger.Log($"Exclusions:");
                         foreach (string anExclude in excludeTags)
                         {
                             Logger.Log("   " + anExclude);
-                        }
+                        }*/
 
                         // TagSet should remove duplicates so no need to do that
                         __instance.pilotExcludedTagSet.AddRange(excludeTags);
 
-                        Logger.Log($"Final Exclusions:");
+                        /*Logger.Log($"Final Exclusions:");
                         foreach (string anExclude in __instance.pilotExcludedTagSet)
                         {
                             Logger.Log("   " + anExclude);
-                        }
+                        }*/
 
                         // Now do the same as the method would and don't call original method
                         PilotDef_MDD pilotDef_MDD = UnitSpawnPointOverride.SelectTaggedPilotDef(mdd, __instance.pilotTagSet, __instance.pilotExcludedTagSet, lanceName, unitIndex);
