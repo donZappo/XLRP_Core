@@ -32,5 +32,18 @@ namespace Extended_CE
                 }
             }
         }
+
+        // Fix for potential negative damage values being applied based on reducing self DFA damage
+        [HarmonyPatch(typeof(Mech), "TakeWeaponDamage")]
+        public static class Mech_TakeWeaponDamage_Patch
+        {
+            static void Prefix(Mech __instance, ref float damageAmount)
+            {
+                if(damageAmount < 0f)
+                {
+                    damageAmount = 0f;
+                }
+            }
+        }
     }
 }
