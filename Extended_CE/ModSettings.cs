@@ -18,5 +18,7 @@ namespace Extended_CE
         public float CSMasteryNerf = 0.85f;
         public int LessResolveAtMaxMorale = 5;
 
+        public float ArtemisIVBonus = 1.5f;
+
     }
 }

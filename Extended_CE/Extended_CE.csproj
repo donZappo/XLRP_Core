@@ -54,6 +54,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NewTech\Artemis.cs" />
     <Compile Include="BugFixes.cs" />
     <Compile Include="BulwarkPatch.cs" />
     <Compile Include="Core.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SaveHandling.cs" />
     <Compile Include="SkillChanges.cs" />
+    <Compile Include="SpecialContractSalvage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="abilities\AbilityDefGu5.json" />
@@ -242,6 +244,7 @@
     <None Include="weapon\Weapon_PPC_PPC_2-Donal.json" />
     <None Include="weapon\Weapon_PPC_PPC_2-Tiegart.json" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetPath)" "E:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\BT_Extended_CE" /Y</PostBuildEvent>

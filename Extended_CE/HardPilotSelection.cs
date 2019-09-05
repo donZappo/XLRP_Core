@@ -31,7 +31,7 @@ namespace Extended_CE.PilotSelection
                         __instance.pilotTagSet.IsEmpty &&
                         __instance.pilotExcludedTagSet.IsEmpty)
                     {
-                        Logger.Log($"Adding Exclusions to pilot: {__instance.pilotDefId}, for lance: {lanceName}, unit index: {unitIndex}, in Mech: {__instance.selectedUnitDefId}");
+                        //Logger.Log($"Adding Exclusions to pilot: {__instance.pilotDefId}, for lance: {lanceName}, unit index: {unitIndex}, in Mech: {__instance.selectedUnitDefId}");
                         /*
                         Skill	    -	            Gunnery 8	    Piloting 8	    Guts 8	        Tactics 8
                         Gunnery 5	Gunner		    -               Flanker	        Gladiator	    Striker
