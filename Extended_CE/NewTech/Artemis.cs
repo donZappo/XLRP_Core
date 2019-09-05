@@ -6,16 +6,16 @@ using Harmony;
 using BattleTech;
 
 namespace Extended_CE.NewTech
-{
-    internal static class ArtemisIV
+{/*
+    public static class ArtemisIV
     {
         internal static bool ArtemisWeapon = false;
 
         // Capture if this is an Artemis LRM
-        [HarmonyPatch(typeof(AttackDirector), "GetClusteredHits")]
-        public static class AttackDirector_GetClusteredHits
+        [HarmonyPatch(typeof(AttackDirector.AttackSequence), "GetClusteredHits")]
+        public static class AttackDirectorAttackSequence_GetClusteredHits
         {
-            public static void Prefix(AttackDirector __instance, Weapon weapon)
+            public static void Prefix(Weapon weapon)
             {
                 try
                 {
@@ -40,7 +40,7 @@ namespace Extended_CE.NewTech
             }
 
             //Reset Artemis
-            public static void Postfix(AttackDirector __instance)
+            public static void Postfix()
             {
                 ArtemisWeapon = false;
             }
@@ -65,5 +65,5 @@ namespace Extended_CE.NewTech
                 }
             }
         }
-    }
+    }*/
 }

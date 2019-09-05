@@ -15,7 +15,7 @@ namespace Extended_CE.SpecialContractSalvage
         [HarmonyPatch(typeof(Contract), "AddMechComponentToSalvage")]
         public static class Contract_AddMechComponentToSalvage
         {
-            public static void Postfix(Contract __instance, MechComponentDef def, SimGameConstants sc)
+            public static void Postfix(Contract __instance, MechComponentDef def, SimGameConstants sc, ref List<SalvageDef> ___finalPotentialSalvage)
             {
                 try
                 {
@@ -36,7 +36,8 @@ namespace Extended_CE.SpecialContractSalvage
                             Count = 1
                         };
 
-                        Traverse.Create(__instance).Field("finalPotentialSalvage").GetValue<List<SalvageDef>>().Add(salvageDef);
+                        ___finalPotentialSalvage.Add(salvageDef);
+                        //Traverse.Create(__instance).Field("finalPotentialSalvage").GetValue<List<SalvageDef>>().Add(salvageDef);
 
                         AllowOnePieceOfLosTechBountyHunter = false;
                     }
