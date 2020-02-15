@@ -3,7 +3,7 @@ using System.Collections;
 using System.Reflection;
 using Harmony;
 using Newtonsoft.Json;
-using static Extended_CE.Logger;
+using static XLRP_Core.Logger;
 using BattleTech;
 using BattleTech.UI;
 

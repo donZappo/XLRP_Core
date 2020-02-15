@@ -5,7 +5,7 @@ using BattleTech.Save.Test;
 using Harmony;
 using Newtonsoft.Json;
 using UnityEngine;
-using static Extended_CE.Logger;
+using static XLRP_Core.Logger;
 using BattleTech.Save;
 
 namespace XLRP_Core
