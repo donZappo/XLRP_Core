@@ -5,7 +5,7 @@ using System.Text;
 using Harmony;
 using BattleTech;
 
-namespace Extended_CE.SpecialContractSalvage
+namespace XLRP_Core.SpecialContractSalvage
 {
     //public static class BountyHunterContractReward
     //{

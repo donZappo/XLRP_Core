@@ -8,7 +8,7 @@ using BattleTech;
 using BattleTech.Data;
 using BattleTech.Framework;
 
-namespace Extended_CE.PilotSelection
+namespace XLRP_Core.PilotSelection
 {
     //// Apply all to hit based quirks
     //[HarmonyPatch(typeof(UnitSpawnPointOverride), "RequestPilot")]

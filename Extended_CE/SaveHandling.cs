@@ -8,7 +8,7 @@ using UnityEngine;
 using static Extended_CE.Logger;
 using BattleTech.Save;
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     public static class SaveHandling
     {

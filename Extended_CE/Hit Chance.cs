@@ -6,7 +6,7 @@ using Harmony;
 using UnityEngine;
 using BattleTech;
 
-namespace Extended_CE.HitChance
+namespace XLRP_Core.HitChance
 {
     // 
     //[HarmonyPatch(typeof(ToHit), "GetUMChance")]

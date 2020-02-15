@@ -7,7 +7,7 @@ using Harmony;
 using Random = UnityEngine.Random;
 using BattleTech;
 
-namespace Extended_CE.HardResolveChanges
+namespace XLRP_Core.HardResolveChanges
 {
     //// Apply Hard mode Called Shot Mastery Nerf
     //[HarmonyPatch(typeof(Pilot), "AddAbility")]

@@ -9,7 +9,7 @@ using BattleTech.Framework;
 using BattleTech.UI;
 using BattleTech.Save;
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     //class DifficultySettings
     //{

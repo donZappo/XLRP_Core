@@ -6,7 +6,7 @@ using Harmony;
 using BattleTech;
 using Localize;
 
-namespace Extended_CE.SkillChanges
+namespace XLRP_Core.SkillChanges
 {
     //// If we are adding a floatie for Ace Pilot because we moved after shooting, change it to Master Tactician because of our skill changes
     //[HarmonyPatch(typeof(MessageCenter), "PublishMessage")]

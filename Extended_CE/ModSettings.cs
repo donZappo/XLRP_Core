@@ -2,7 +2,7 @@
 using BattleTech;
 
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     public class ModSettings
     {

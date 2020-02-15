@@ -253,6 +253,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\BT_Extended_CE\" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\XLRP-Core\" /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>

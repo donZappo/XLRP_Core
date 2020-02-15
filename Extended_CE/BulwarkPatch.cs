@@ -7,7 +7,7 @@ using Harmony;
 using BattleTech;
 using BattleTech.UI;
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     // Apply to hit bulwark change
     //[HarmonyPatch(typeof(ToHit), "GetAllModifiers")]

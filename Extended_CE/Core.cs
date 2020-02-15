@@ -7,7 +7,7 @@ using static Extended_CE.Logger;
 using BattleTech;
 using BattleTech.UI;
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     //public enum DifficultySetting
     //{

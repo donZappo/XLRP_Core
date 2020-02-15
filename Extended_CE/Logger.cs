@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     public static class Logger
     {

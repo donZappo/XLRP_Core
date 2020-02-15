@@ -11,7 +11,7 @@ using BattleTech.Save;
 using BattleTech.Data;
 using HBS.Collections;
 
-namespace Extended_CE
+namespace XLRP_Core
 {
     class BugFixes
     {
