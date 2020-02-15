@@ -37,6 +37,7 @@ namespace Extended_CE
     //    }
     //}
 
+
     //// Add in Bulwark modifiers in to the weapon to hit preview tooltip
     //[HarmonyPatch(typeof(CombatHUDWeaponSlot), "UpdateToolTipsFiring")]
     //public static class CombatHUDWeaponSlot_UpdateToolTipsFiring
