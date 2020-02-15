@@ -22,7 +22,7 @@ namespace XLRP_Core
 
         public static void Init(string modDir, string settings)
         {
-            var harmony = HarmonyInstance.Create("com.Same.BattleTech.GalaxyAtWar");
+            var harmony = HarmonyInstance.Create("XLRP-Core.Misc.Fixes");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
             // read settings
             try

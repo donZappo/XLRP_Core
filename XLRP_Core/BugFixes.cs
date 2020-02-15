@@ -52,9 +52,8 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(TagSetQueryExtensions), "CanRandomlySelectUnitDef")]
         public static class TagSetQueryExtensions_GetMatchingUnitDefs_Patch
         {
-            static bool Prefix(ref TagSet companyTags)
+            static void Prefix(ref TagSet companyTags)
             {
-                return false;
                 var tempTagSet = new TagSet(companyTags);
                 foreach (var tag in tempTagSet)
                 {
