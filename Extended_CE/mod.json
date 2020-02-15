@@ -1,23 +1,81 @@
 {
-    "Name": "BT_Extended_CE",
-    "Enabled": true,
-	
-    "DependsOn": [ "BT_Extended_Overrides" ],
-	
-    "OptionallyDependsOn": [ "Galaxy at War", "PermanentEvasion", "Repair Tonnage and Finances" ],
-	
-    "Version": "1.6.0.0",
-
-    "Author": "Haree78",
-
-    "DependsOn": [],
-    "ConflictsWith": [],
-	
-	"DLL": "Extended_CE.dll",
-
-    "Manifest": [
-		{ "Type": "AbilityDef", "Path": "abilities", "ShouldMergeJSON": true  },
-		{ "Type": "AmmunitionBoxDef", "Path": "ammunitionBox", "AddToDB": true },
-		{ "Type": "WeaponDef", "Path": "weapon", "AddToDB": true }
-    ]
+  "Name": "XLRP-Core",
+  "Description": "Core Mod for XLRP Complete",
+  "Author": "vengefire & donZappo",
+  "Website": null,
+  "Contact": null,
+  "Version": "0.0.2",
+  "PackagedOn": null,
+  "BattleTechVersionMin": null,
+  "BattleTechVersionMax": null,
+  "BattleTechVersion": null,
+  "Enabled": true,
+  "Hidden": false,
+  "Locked": false,
+  "DependsOn": [
+    "Custom Ammo Categories",
+    "CustomComponents"
+  ],
+  "ConflictsWith": [],
+  "OptionallyDependsOn": [],
+  "IgnoreLoadFailure": false,
+  "DLL": "XLRP_Core.dll",
+  "DLLEntryPoint": null,
+  "EnableAssemblyVersionCheck": false,
+  "LoadImplicitManifest": true,
+  "CustomResourceTypes": [
+    "MEBonusDescriptions", "MECriticalEffects", "CCCategories", "CCDefaults", "CCTagRestrictions", "CustomSVGIcon"
+  ],
+  "DataAddendumEntries": [
+    {
+      "name": "BattleTech.AmmoCategoryEnumeration",
+      "path": "AmmoCategory.json"
+    },
+    {
+      "name": "BattleTech.WeaponEnumeration",
+      "path": "WeaponCategory.json"
+    }
+  ],
+  "Manifest": [
+    {
+      "Type": "AbilityDef",
+      "Path": "abilities"
+    },
+    {
+      "Type": "SVGAsset",
+      "Path": "icons",
+      "ShouldMergeJSON": false
+    },
+    {
+      "Type": "CCCategories",
+      "Path": "categories/",
+      "ShouldMergeJSON": false
+    },
+    {
+      "Type": "CCTagRestrictions",
+      "Path": "tagRestrictions/",
+      "ShouldMergeJSON": false
+    },
+    {
+      "Type": "CCDefaults",
+      "Path": "defaults/",
+      "ShouldMergeJSON": false
+    },
+    {
+      "Type": "MEBonusDescriptions",
+      "Path": "bonusDescriptions/",
+      "ShouldMergeJSON": false
+    },
+    {
+      "Type": "MECriticalEffects",
+      "Path": "criticalEffects/",
+      "ShouldMergeJSON": false
+    },
+    {
+      "Type": "DesignMaskDef",
+      "Path": "DesignMasks"
+    }
+  ],
+  "RemoveManifestEntries": [],
+  "Settings": {}
 }

@@ -8,6 +8,8 @@ using UnityEngine;
 using BattleTech.Framework;
 using BattleTech.UI;
 using BattleTech.Save;
+using BattleTech.Data;
+using HBS.Collections;
 
 namespace Extended_CE
 {
@@ -42,6 +44,22 @@ namespace Extended_CE
                 if(damageAmount < 0f)
                 {
                     damageAmount = 0f;
+                }
+            }
+        }
+
+        //removes logging of excessively long tags from bundled mods.
+        [HarmonyPatch(typeof(TagSetQueryExtensions), "CanRandomlySelectUnitDef")]
+        public static class TagSetQueryExtensions_GetMatchingUnitDefs_Patch
+        {
+            static bool Prefix(ref TagSet companyTags)
+            {
+                return false;
+                var tempTagSet = new TagSet(companyTags);
+                foreach (var tag in tempTagSet)
+                {
+                    if (tag.StartsWith("PilotQuirksSave") || tag.StartsWith("GalaxyAtWarSave"))
+                        companyTags.Remove(tag);
                 }
             }
         }
