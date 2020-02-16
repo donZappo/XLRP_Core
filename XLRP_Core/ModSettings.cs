@@ -9,6 +9,10 @@ namespace XLRP_Core
         public bool Debug = false;
         public string modDirectory;
 
+        //New settings
+        public bool UpgradeDegradedOpFor = false;
+
+        //Old settings
         public float BulwarkMalus = -1f;
         public float SimSpotterDistance = 100.0f;
         public float SimSensorDistance = 100.0f;
