@@ -13,6 +13,7 @@ namespace XLRP_Core
 {
     class DifficultySettings
     {
+        //Upgrade degraded armor for OpFor to make them more stunty.
         [HarmonyPatch(typeof(AbstractActor), "CreateSpawnEffectByTag", null)]
         public static class Armor_Upgrade
         {
