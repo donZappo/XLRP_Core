@@ -20,7 +20,7 @@ namespace XLRP_Core
             // Token: 0x06000002 RID: 2 RVA: 0x000020AC File Offset: 0x000002AC
             private static void Prefix(AbstractActor __instance, ref string effectTag)
             {
-                if (effectTag == "spawn_poorly_maintained_50" || effectTag == "spawn_poorly_maintained_75")
+                if (Core.Settings.UpgradeDegradedOpFor &&  (effectTag == "spawn_poorly_maintained_50" || effectTag == "spawn_poorly_maintained_75"))
                 {
                     effectTag = "spawn_poorly_maintained_25";
                 }
