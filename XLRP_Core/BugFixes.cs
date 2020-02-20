@@ -10,6 +10,8 @@ using BattleTech.UI;
 using BattleTech.Save;
 using BattleTech.Data;
 using HBS.Collections;
+using System.Reflection.Emit;
+using System.Reflection;
 
 namespace XLRP_Core
 {
@@ -60,6 +62,27 @@ namespace XLRP_Core
                     if (tag.StartsWith("PilotQuirksSave") || tag.StartsWith("GalaxyAtWarSave"))
                         companyTags.Remove(tag);
                 }
+            }
+        }
+
+        //Shows all the Argo upgrade icons at all times. I am convinced this is a bug, not a feature. Thank you for the dark magic, gnivler!
+        [HarmonyPatch(typeof(SGEngineeringScreen), "PopulateUpgradeDictionary")]
+        public static class SGEngineeringScreen_PopulateUpgradeDictionary_Patch
+        {
+            public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+            {
+                var codes = instructions.ToList();
+                var targetMethod = AccessTools.Method(typeof(ShipModuleUpgrade), "get_RequiredModules");
+                // want 2nd and final occurence of targetMethod
+                var index = codes.FindIndex(c =>
+                    c == codes.Last(x => x.opcode == OpCodes.Callvirt && (MethodInfo)x.operand == targetMethod));
+                // nop out the instructions for the 2nd conditional
+                // && this.simState.HasShipUpgrade(shipModuleUpgrade2.RequiredModules, list)
+                for (var i = -3; i < 4; i++)
+                {
+                    codes[index + i].opcode = OpCodes.Nop;
+                }
+                return codes.AsEnumerable();
             }
         }
     }
