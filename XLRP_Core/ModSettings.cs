@@ -13,6 +13,7 @@ namespace XLRP_Core
         public bool UpgradeDegradedOpFor = false;
         public bool JumpStopsCalledShot = false;
         public bool UpgradeItems = false;
+        public bool UpgradePilots = false;
 
         //Old settings
         public float BulwarkMalus = -1f;

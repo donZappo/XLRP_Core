@@ -188,7 +188,7 @@ namespace XLRP_Core.EnemySelection
     {
         static bool Prefix(UnitSpawnPointOverride __instance, ref LoadRequest request, MetadataDatabase mdd, string lanceName, int unitIndex)
         {
-            if (UnityGameInstance.BattleTechGame.Simulation != null)
+            if (UnityGameInstance.BattleTechGame.Simulation != null && Core.Settings.UpgradePilots)
             {
                 try
                 {
