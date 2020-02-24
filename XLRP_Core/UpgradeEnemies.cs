@@ -22,12 +22,12 @@ namespace XLRP_Core.EnemySelection
                 int i = 0;
                 foreach (var component in tempMechInventory)
                 {
-                    if (component.ComponentDefType == ComponentType.Weapon)
+                    if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
                     {
                         Traverse.Create(__result.MechDef.Inventory[i]).Property("Def").
                             SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
                     }
-                    if (component.ComponentDefType == ComponentType.Upgrade)
+                    if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
                         Traverse.Create(__result.MechDef.Inventory[i]).Property("Def").
                             SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
                     i++;
@@ -45,12 +45,12 @@ namespace XLRP_Core.EnemySelection
                 int i = 0;
                 foreach (var component in tempMechInventory)
                 {
-                    if (component.ComponentDefType == ComponentType.Weapon)
+                    if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
                     {
                         Traverse.Create(__result.VehicleDef.Inventory.ElementAt(i)).Property("Def").
                             SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
                     }
-                    if (component.ComponentDefType == ComponentType.Upgrade)
+                    if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
                         Traverse.Create(__result.VehicleDef.Inventory.ElementAt(i)).Property("Def").
                             SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
                     i++;
@@ -67,12 +67,12 @@ namespace XLRP_Core.EnemySelection
                 int i = 0;
                 foreach (var component in tempMechInventory)
                 {
-                    if (component.ComponentDefType == ComponentType.Weapon)
+                    if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
                     {
                         Traverse.Create(__result.TurretDef.Inventory.ElementAt(i)).Property("Def").
                             SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
                     }
-                    if (component.ComponentDefType == ComponentType.Upgrade)
+                    if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
                         Traverse.Create(__result.TurretDef.Inventory.ElementAt(i)).Property("Def").
                             SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
                     i++;
