@@ -66,7 +66,7 @@
     <Compile Include="BulwarkPatch.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="DifficultySettings.cs" />
-    <Compile Include="HardPilotSelection.cs" />
+    <Compile Include="UpgradeEnemies.cs" />
     <Compile Include="HardResolve.cs" />
     <Compile Include="Hit Chance.cs" />
     <Compile Include="Logger.cs" />
@@ -77,33 +77,6 @@
     <Compile Include="SpecialContractSalvage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="abilities\AbilityDefGu5.json" />
-    <None Include="abilities\AbilityDefP8.json" />
-    <None Include="abilities\AbilityDefT8A.json" />
-    <None Include="abilities\Traits\TraitDefCalledShotMaster.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit1.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit10.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit2.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit3.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit4.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit5.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit6.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit7.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit8.json" />
-    <None Include="abilities\Traits\TraitDefMeleeHit9.json" />
-    <None Include="abilities\Traits\TraitDefMinRangeReduce45.json" />
-    <None Include="abilities\Traits\TraitDefMinRangeReduce90.json" />
-    <None Include="abilities\Traits\TraitDefUnsteadySet60.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit1.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit10.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit2.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit3.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit4.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit5.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit6.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit7.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit8.json" />
-    <None Include="abilities\Traits\TraitDefWeaponHit9.json" />
     <None Include="ammunitionBox\Ammo_AmmunitionBox_Generic_AC10.json" />
     <None Include="mod.json" />
     <None Include="StreamingAssets\data\constants\CareerDifficultySettings.json" />
