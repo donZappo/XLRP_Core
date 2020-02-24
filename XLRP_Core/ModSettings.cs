@@ -11,7 +11,7 @@ namespace XLRP_Core
 
         //New settings
         public bool UpgradeDegradedOpFor = false;
-        public bool JumpStopsCS = false;
+        public bool JumpStopsCalledShot = false;
         public bool UpgradeItems = false;
 
         //Old settings

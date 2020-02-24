@@ -15,7 +15,7 @@ namespace XLRP_Core.SkillChanges
         {
             public static bool Prefix(AbstractActor __instance)
             {
-                if (__instance.HasJumpedThisRound && Core.Settings.JumpStopsCS)
+                if (__instance.HasJumpedThisRound && Core.Settings.JumpStopsCalledShot)
                     return false;
                 else
                     return true;
