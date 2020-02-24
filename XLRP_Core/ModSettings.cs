@@ -11,6 +11,8 @@ namespace XLRP_Core
 
         //New settings
         public bool UpgradeDegradedOpFor = false;
+        public bool JumpStopsCS = false;
+        public bool UpgradeItems = false;
 
         //Old settings
         public float BulwarkMalus = -1f;

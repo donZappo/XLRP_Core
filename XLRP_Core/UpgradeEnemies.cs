@@ -18,6 +18,8 @@ namespace XLRP_Core.EnemySelection
         {
             public static void Postfix(UnitSpawnPointGameLogic __instance, ref Mech __result)
             {
+                if (!Core.Settings.UpgradeItems)
+                    return;
                 var tempMechInventory = new List<MechComponentRef>(__result.MechDef.Inventory).ToArray();
                 int i = 0;
                 foreach (var component in tempMechInventory)
@@ -41,6 +43,9 @@ namespace XLRP_Core.EnemySelection
         {
             public static void Postfix(UnitSpawnPointGameLogic __instance, ref Vehicle __result)
             {
+                if (!Core.Settings.UpgradeItems)
+                    return;
+
                 var tempMechInventory = new List<VehicleComponentRef>(__result.VehicleDef.Inventory).ToArray();
                 int i = 0;
                 foreach (var component in tempMechInventory)
@@ -63,6 +68,9 @@ namespace XLRP_Core.EnemySelection
         {
             public static void Postfix(UnitSpawnPointGameLogic __instance, ref Turret __result)
             {
+                if (!Core.Settings.UpgradeItems)
+                    return;
+
                 var tempMechInventory = new List<TurretComponentRef>(__result.TurretDef.Inventory).ToArray();
                 int i = 0;
                 foreach (var component in tempMechInventory)
