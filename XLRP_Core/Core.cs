@@ -23,7 +23,6 @@ namespace XLRP_Core
         public static void Init(string modDir, string settings)
         {
             var harmony = HarmonyInstance.Create("XLRP-Core.Misc.Fixes");
-            harmony.PatchAll(Assembly.GetExecutingAssembly());
             // read settings
             try
             {
@@ -38,6 +37,7 @@ namespace XLRP_Core
             // blank the logfile
             Clear();
             PrintObjectFields(Settings, "Settings");
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
         // logs out all the settings and their values at runtime
         internal static void PrintObjectFields(object obj, string name)
