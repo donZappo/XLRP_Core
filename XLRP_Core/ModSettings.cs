@@ -14,6 +14,7 @@ namespace XLRP_Core
         public bool JumpStopsCalledShot = false;
         public bool UpgradeItems = false;
         public bool UpgradePilots = false;
+        public bool ShowAllArgoUpgrades = true;
 
         //Old settings
         public float BulwarkMalus = -1f;

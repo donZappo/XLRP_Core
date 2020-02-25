@@ -69,6 +69,7 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(SGEngineeringScreen), "PopulateUpgradeDictionary")]
         public static class SGEngineeringScreen_PopulateUpgradeDictionary_Patch
         {
+            static bool Prepare() { return Core.Settings.ShowAllArgoUpgrades; }
             public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
                 var codes = instructions.ToList();
