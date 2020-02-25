@@ -13,12 +13,10 @@ namespace XLRP_Core.SkillChanges
         [HarmonyPatch(typeof(AbstractActor), "CanUseOffensivePush")]
         public static class AbstractActor_CanUseOffensivePush_Patch
         {
-            public static bool Prefix(AbstractActor __instance)
+            public static void Postfix(AbstractActor __instance, ref bool __result)
             {
                 if (__instance.HasJumpedThisRound && Core.Settings.JumpStopsCalledShot)
-                    return false;
-                else
-                    return true;
+                    __result = false;
             }
         }
     }
