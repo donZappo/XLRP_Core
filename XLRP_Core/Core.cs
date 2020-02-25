@@ -71,6 +71,7 @@ namespace XLRP_Core
         internal static ModSettings Settings;
     }
 
+
     //[HarmonyPatch(typeof(SimGameState), "Dehydrate")]
     //public static class SimGameState_Dehydrate_Patch
     //{
