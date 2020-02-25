@@ -12,81 +12,108 @@ namespace XLRP_Core.EnemySelection
 {
     public static class Upgrade_Equipment
     {
+        [HarmonyPatch(typeof(Team), "CollectUnitBaseline")]
+        public static class Rebellious_Area
+        {
+            private static void Postfix(Team __instance)
+            {
+                foreach (AbstractActor actor in __instance.units)
+                {
+                    if (!Core.Settings.UpgradeItems || actor.EncounterTags.Contains("Upgraded") || actor.team.IsLocalPlayer)
+                        continue;
+
+                    actor.EncounterTags.Add("Upgraded");
+                    foreach (var foo in actor.allComponents)
+                    { 
+                        if (foo.componentType == ComponentType.Weapon && foo.componentDef.ComponentTags.Contains("component_type_stock"))
+                        {
+                            Traverse.Create(foo).Property("componentDef").
+                                SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, foo.componentDef));
+                        }
+                        if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock"))
+                            Traverse.Create(foo).Property("componentDef").
+                                SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, foo.componentDef));
+                    }
+                }
+            }
+        }
+
+
         //These patches and methods will dynamically upgrade the weapons and equipment on the OpFor.
-        [HarmonyPatch(typeof(UnitSpawnPointGameLogic), "SpawnMech")]
-        public static class UnitSpawnPointGameLogic_SpawnMech_Patch
-        {
-            public static void Postfix(UnitSpawnPointGameLogic __instance, ref Mech __result)
-            {
-                if (!Core.Settings.UpgradeItems)
-                    return;
-                var tempMechInventory = new List<MechComponentRef>(__result.MechDef.Inventory).ToArray();
-                int i = 0;
-                foreach (var component in tempMechInventory)
-                {
-                    if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
-                    {
-                        Traverse.Create(__result.MechDef.Inventory[i]).Property("Def").
-                            SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
-                    }
-                    if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
-                        Traverse.Create(__result.MechDef.Inventory[i]).Property("Def").
-                            SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
-                    i++;
-                }
+        //[HarmonyPatch(typeof(UnitSpawnPointGameLogic), "SpawnMech")]
+        //public static class UnitSpawnPointGameLogic_SpawnMech_Patch
+        //{
+        //    public static void Postfix(UnitSpawnPointGameLogic __instance, ref Mech __result)
+        //    {
+        //        if (!Core.Settings.UpgradeItems)
+        //            return;
+        //        var tempMechInventory = new List<MechComponentRef>(__result.MechDef.Inventory).ToArray();
+        //        int i = 0;
+        //        foreach (var component in tempMechInventory)
+        //        {
+        //            if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
+        //            {
+        //                Traverse.Create(__result.MechDef.Inventory[i]).Property("Def").
+        //                    SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
+        //            }
+        //            if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
+        //                Traverse.Create(__result.MechDef.Inventory[i]).Property("Def").
+        //                    SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
+        //            i++;
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
-        [HarmonyPatch(typeof(UnitSpawnPointGameLogic), "SpawnVehicle")]
-        public static class UnitSpawnPointGameLogic_SpawnVehicle_Patch
-        {
-            public static void Postfix(UnitSpawnPointGameLogic __instance, ref Vehicle __result)
-            {
-                if (!Core.Settings.UpgradeItems)
-                    return;
+        //[HarmonyPatch(typeof(UnitSpawnPointGameLogic), "SpawnVehicle")]
+        //public static class UnitSpawnPointGameLogic_SpawnVehicle_Patch
+        //{
+        //    public static void Postfix(UnitSpawnPointGameLogic __instance, ref Vehicle __result)
+        //    {
+        //        if (!Core.Settings.UpgradeItems)
+        //            return;
 
-                var tempMechInventory = new List<VehicleComponentRef>(__result.VehicleDef.Inventory).ToArray();
-                int i = 0;
-                foreach (var component in tempMechInventory)
-                {
-                    if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
-                    {
-                        Traverse.Create(__result.VehicleDef.Inventory.ElementAt(i)).Property("Def").
-                            SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
-                    }
-                    if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
-                        Traverse.Create(__result.VehicleDef.Inventory.ElementAt(i)).Property("Def").
-                            SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
-                    i++;
-                }
-            }
-        }
+        //        var tempMechInventory = new List<VehicleComponentRef>(__result.VehicleDef.Inventory).ToArray();
+        //        int i = 0;
+        //        foreach (var component in tempMechInventory)
+        //        {
+        //            if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
+        //            {
+        //                Traverse.Create(__result.VehicleDef.Inventory.ElementAt(i)).Property("Def").
+        //                    SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
+        //            }
+        //            if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
+        //                Traverse.Create(__result.VehicleDef.Inventory.ElementAt(i)).Property("Def").
+        //                    SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
+        //            i++;
+        //        }
+        //    }
+        //}
 
-        [HarmonyPatch(typeof(UnitSpawnPointGameLogic), "SpawnTurret")]
-        public static class UnitSpawnPointGameLogic_SpawnTurret_Patch
-        {
-            public static void Postfix(UnitSpawnPointGameLogic __instance, ref Turret __result)
-            {
-                if (!Core.Settings.UpgradeItems)
-                    return;
+        //[HarmonyPatch(typeof(UnitSpawnPointGameLogic), "SpawnTurret")]
+        //public static class UnitSpawnPointGameLogic_SpawnTurret_Patch
+        //{
+        //    public static void Postfix(UnitSpawnPointGameLogic __instance, ref Turret __result)
+        //    {
+        //        if (!Core.Settings.UpgradeItems)
+        //            return;
 
-                var tempMechInventory = new List<TurretComponentRef>(__result.TurretDef.Inventory).ToArray();
-                int i = 0;
-                foreach (var component in tempMechInventory)
-                {
-                    if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
-                    {
-                        Traverse.Create(__result.TurretDef.Inventory.ElementAt(i)).Property("Def").
-                            SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
-                    }
-                    if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
-                        Traverse.Create(__result.TurretDef.Inventory.ElementAt(i)).Property("Def").
-                            SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
-                    i++;
-                }
-            }
-        }
+        //        var tempMechInventory = new List<TurretComponentRef>(__result.TurretDef.Inventory).ToArray();
+        //        int i = 0;
+        //        foreach (var component in tempMechInventory)
+        //        {
+        //            if (component.ComponentDefType == ComponentType.Weapon && component.Def.ComponentTags.Contains("component_type_stock"))
+        //            {
+        //                Traverse.Create(__result.TurretDef.Inventory.ElementAt(i)).Property("Def").
+        //                    SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, component.Def));
+        //            }
+        //            if (component.ComponentDefType == ComponentType.Upgrade && component.Def.ComponentTags.Contains("component_type_stock"))
+        //                Traverse.Create(__result.TurretDef.Inventory.ElementAt(i)).Property("Def").
+        //                    SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, component.Def));
+        //            i++;
+        //        }
+        //    }
+        //}
 
         public static MechComponentDef UpgradeUpgrades(Contract contract, MechComponentDef def)
         {
@@ -155,29 +182,35 @@ namespace XLRP_Core.EnemySelection
         [HarmonyPatch(typeof(Contract), "AddMechComponentToSalvage")]
         public static class Contract_AddWeaponToSalvage_Patch
         {
-            internal static float veryRareWCHolder = 0;
-            internal static float rareWCHolder = 0;
-            internal static float rareUCHolder = 0;
-            internal static float veryRareUCHolder = 0;
-            public static void Prefix(Contract __instance, SimGameConstants sc)
+            }
+            public static bool Prefix(Contract __instance, SimGameConstants sc, MechComponentDef def)
             {
-                veryRareWCHolder = sc.Salvage.VeryRareWeaponChance;
-                rareWCHolder = sc.Salvage.RareWeaponChance;
-                veryRareUCHolder = sc.Salvage.VeryRareUpgradeChance;
-                rareWCHolder = sc.Salvage.RareUpgradeChance;
-                sc.Salvage.VeryRareWeaponChance = -20;
-                sc.Salvage.RareWeaponChance = -20;
-                sc.Salvage.VeryRareUpgradeChance = -20;
-                sc.Salvage.RareUpgradeChance = -20;
+            if (def.ComponentTags.Contains("BLACKLISTED"))
+                return false;
 
-            }
-            public static void Postfix(SimGameConstants sc)
+            SalvageDef salvageDef = new SalvageDef();
+            salvageDef.MechComponentDef = def;
+            salvageDef.Description = new DescriptionDef(def.Description);
+            salvageDef.RewardID = __instance.GenerateRewardUID();
+            salvageDef.Type = SalvageDef.SalvageType.COMPONENT;
+            salvageDef.ComponentType = def.ComponentType;
+            salvageDef.Damaged = false;
+            salvageDef.Weight = sc.Salvage.DefaultComponentWeight;
+            salvageDef.Count = 1;
+            if (def.Description.Rarity < sc.Salvage.ItemAutoCullLevel)
             {
-                sc.Salvage.VeryRareWeaponChance = veryRareWCHolder;
-                sc.Salvage.RareWeaponChance = rareWCHolder;
-                sc.Salvage.VeryRareUpgradeChance = veryRareUCHolder;
-                sc.Salvage.RareUpgradeChance = rareUCHolder;
+                if ((bool)Traverse.Create(__instance).Method("IsSalvageInContent", new Type[] { typeof(SalvageDef) }).GetValue(salvageDef))
+                {
+                    var foo = (List<SalvageDef>)Traverse.Create(__instance).Field("finalPotentialSalvage").GetValue();
+                    foo.Add(salvageDef);
+                    return false;
+                }
             }
+            else
+            {
+                Logger.Log(string.Format("CULLED ILLEGAL MECH COMPONENT ({0}) of RARITY ({1}). From Random Upgrade? {2}.", def.Description.Id, def.Description.Rarity, false));
+            }
+            return false;
         }
     }
 
