@@ -17,6 +17,9 @@ namespace XLRP_Core.EnemySelection
         {
             private static void Postfix(Team __instance)
             {
+                if (UnityGameInstance.BattleTechGame.Simulation == null)
+                    return;
+
                 foreach (AbstractActor actor in __instance.units)
                 {
                     if (!Core.Settings.UpgradeItems || actor.EncounterTags.Contains("Upgraded") || actor.team.IsLocalPlayer)
