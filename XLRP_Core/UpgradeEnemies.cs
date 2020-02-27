@@ -17,7 +17,7 @@ namespace XLRP_Core.EnemySelection
         {
             private static void Postfix(Team __instance)
             {
-                if (UnityGameInstance.BattleTechGame.Simulation == null)
+                if (__instance.Combat.ActiveContract.ContractTypeValue.UsesFury)
                     return;
 
                 foreach (AbstractActor actor in __instance.units)
