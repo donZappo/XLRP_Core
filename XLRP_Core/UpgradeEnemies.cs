@@ -13,7 +13,7 @@ namespace XLRP_Core.EnemySelection
     public static class Upgrade_Equipment
     {
         [HarmonyPatch(typeof(Team), "CollectUnitBaseline")]
-        public static class Rebellious_Area
+        public static class Team_CollectUnitBaseline_Patch
         {
             private static void Postfix(Team __instance)
             {
