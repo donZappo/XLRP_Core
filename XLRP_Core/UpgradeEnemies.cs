@@ -42,10 +42,13 @@ namespace XLRP_Core.EnemySelection
         public static class UnitSpawnPointGameLogic_SelectTaggedUnitDef_Patch
         {
             public static void Postfix(ref UnitDef_MDD __result, MetadataDatabase mdd, TagSet unitTagSet,
-                DateTime? currentDate, TagSet companyTags)
+                DateTime? currentDate, TagSet companyTags, TagSet unitExcludedTagSet)
             {
-                var foo = mdd.GetUnitDefByUnitDefID("mechdef_cicada_CDA-2A");
-                __result = foo;
+                var mechParent = __result.UnitDefID;
+                TagSet mechName = new TagSet { mechParent };
+                var potentialMechs = mdd.GetMatchingUnitDefs(mechName, unitExcludedTagSet, true, currentDate, companyTags);
+                potentialMechs.Shuffle();
+                __result = potentialMechs[0];
             }
         }
 
