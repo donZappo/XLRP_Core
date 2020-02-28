@@ -12,30 +12,66 @@ namespace XLRP_Core.EnemySelection
 {
     public static class Upgrade_Equipment
     {
+        //These methods will check at the beginning of combat and the beginning of each round for mechs that need to be upgraded.
+        [HarmonyPatch(typeof(TurnDirector), "StartFirstRound")]
+        public static class TurnDirector_StarFirstRound_Patch
+        {
+            private static void Postfix(TurnDirector __instance)
+            {
+                foreach(var team in __instance.Combat.Teams)
+                {
+                    if (!team.IsLocalPlayer)
+                        CheckForUpgrades(team);
+                }
+            }
+        }
+
         [HarmonyPatch(typeof(Team), "CollectUnitBaseline")]
         public static class Team_CollectUnitBaseline_Patch
         {
-            private static void Postfix(Team __instance)
+            public static void Postfix(Team __instance)
             {
-                if (__instance.Combat.ActiveContract.ContractTypeValue.UsesFury)
-                    return;
+                if(!__instance.IsLocalPlayer)
+                    CheckForUpgrades(__instance);
+            }
+            
+        }
 
-                foreach (AbstractActor actor in __instance.units)
+        //This method will dynamically select amongst variants with the same hardpoints. 
+        [HarmonyPatch(typeof(UnitSpawnPointOverride), "SelectTaggedUnitDef")]
+        public static class UnitSpawnPointGameLogic_SelectTaggedUnitDef_Patch
+        {
+            public static void Postfix(ref UnitDef_MDD __result, MetadataDatabase mdd, TagSet unitTagSet,
+                DateTime? currentDate, TagSet companyTags)
+            {
+                var foo = mdd.GetUnitDefByUnitDefID("mechdef_cicada_CDA-2A");
+                __result = foo;
+            }
+        }
+
+        //Actually check for and upgrade the stuff.
+        public static void CheckForUpgrades(Team team)
+        {
+            if (team.Combat.ActiveContract.ContractTypeValue.UsesFury)
+                return;
+
+            foreach (AbstractActor actor in team.units)
+            {
+                if (!Core.Settings.UpgradeItems || actor.EncounterTags.Contains("Upgraded"))
+                    continue;
+
+                actor.EncounterTags.Add("Upgraded");
+                foreach (var foo in actor.allComponents)
                 {
-                    if (!Core.Settings.UpgradeItems || actor.EncounterTags.Contains("Upgraded") || actor.team.IsLocalPlayer)
-                        continue;
-
-                    actor.EncounterTags.Add("Upgraded");
-                    foreach (var foo in actor.allComponents)
-                    { 
-                        if (foo.componentType == ComponentType.Weapon && foo.componentDef.ComponentTags.Contains("component_type_stock"))
-                        {
-                            Traverse.Create(foo).Property("componentDef").
-                                SetValue(UpgradeWeapons(__instance.Combat.ActiveContract, foo.componentDef));
-                        }
-                        if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock"))
-                            Traverse.Create(foo).Property("componentDef").
-                                SetValue(UpgradeUpgrades(__instance.Combat.ActiveContract, foo.componentDef));
+                    if (foo.componentType == ComponentType.Weapon && foo.componentDef.ComponentTags.Contains("component_type_stock"))
+                    {
+                        Traverse.Create(foo).Property("componentDef").
+                            SetValue(UpgradeWeapons(team.Combat.ActiveContract, foo.componentDef));
+                    }
+                    if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock"))
+                    {
+                        Traverse.Create(foo).Property("componentDef").
+                              SetValue(UpgradeUpgrades(team.Combat.ActiveContract, foo.componentDef));
                     }
                 }
             }
@@ -158,6 +194,9 @@ namespace XLRP_Core.EnemySelection
             float num2 = ((float)contract.Override.finalDifficulty + sc.Salvage.VeryRareWeaponChance) / sc.Salvage.WeaponChanceDivisor;
             float num3 = ((float)contract.Override.finalDifficulty + sc.Salvage.RareWeaponChance) / sc.Salvage.WeaponChanceDivisor;
             float[] array = null;
+            Logger.Log(num.ToString());
+            Logger.Log(num2.ToString());
+            Logger.Log(num3.ToString());
             if (num < num2)
             {
                 array = sc.Salvage.VeryRareWeaponLevel;
