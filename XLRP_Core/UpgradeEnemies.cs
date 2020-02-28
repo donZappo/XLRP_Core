@@ -47,6 +47,7 @@ namespace XLRP_Core.EnemySelection
                 var mechParent = __result.UnitDefID;
                 TagSet mechName = new TagSet { mechParent };
                 var potentialMechs = mdd.GetMatchingUnitDefs(mechName, unitExcludedTagSet, true, currentDate, companyTags);
+                potentialMechs.Add(__result);
                 potentialMechs.Shuffle();
                 __result = potentialMechs[0];
             }
