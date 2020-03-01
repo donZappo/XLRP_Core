@@ -15,8 +15,22 @@ using System.Reflection;
 
 namespace XLRP_Core
 {
-    class BugFixes
+    class BugFixes_QoL
     {
+        //This will show that requirements are not met for the events, but not say what exactly they are.
+        [HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
+        public static class SimGameInterruptManager_QueueEventPopup_Patch
+        {
+            public static void Prefix(ref SimGameEventDef evt)
+            {
+                if (Core.Settings.ObfuscateEventRequirements)
+                    Traverse.Create(evt)
+                        .Property("Options")
+                        .SetValue(evt.Options.Where(o => o.RequirementList.Length == 0).ToArray());
+            }
+        }
+
+
         // Fix for PC controlled NPC pilots that die during Flashpoints such as Fangerholm and Kell
         [HarmonyPatch(typeof(Contract), "FinalizeKilledMechWarriors")]
         public static class Contract_FinalizeKilledMechWarriors_Patch

@@ -15,6 +15,7 @@ namespace XLRP_Core
         public bool UpgradeItems = false;
         public bool UpgradePilots = false;
         public bool ShowAllArgoUpgrades = true;
+        public bool ObfuscateEventRequirements = false;
 
         //Old settings
         public float BulwarkMalus = -1f;
