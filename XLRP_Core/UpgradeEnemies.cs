@@ -18,8 +18,18 @@ namespace XLRP_Core.EnemySelection
         {
             private static void Postfix(TurnDirector __instance)
             {
+                Logger.LogDebug("Start First Round");
+                Logger.LogDebug("*********");
                 foreach(var team in __instance.Combat.Teams)
                 {
+                    foreach (var actor in team.units)
+                    {
+                        Logger.LogDebug("UnitName: " + actor.UnitName);
+                        Logger.LogDebug("MaxWalkDistance: " + actor.MaxWalkDistance.ToString());
+                        Logger.LogDebug("MaxSpeed: " + actor.MaxSpeed.ToString());
+                        Logger.LogDebug("MaxSprintDistance: " + actor.MaxSprintDistance.ToString());
+                        Logger.LogDebug("======================");
+                    }
                     if (!team.IsLocalPlayer)
                         CheckForUpgrades(team);
                 }
@@ -31,6 +41,8 @@ namespace XLRP_Core.EnemySelection
         {
             public static void Postfix(Team __instance)
             {
+                Logger.LogDebug("Collect Unit Baseline at start of turn");
+                Logger.LogDebug("******************");
                 if(!__instance.IsLocalPlayer)
                     CheckForUpgrades(__instance);
             }
@@ -69,13 +81,17 @@ namespace XLRP_Core.EnemySelection
                 {
                     if (foo.componentType == ComponentType.Weapon && foo.componentDef.ComponentTags.Contains("component_type_stock"))
                     {
+                        Logger.LogDebug("Original Weapon: " + foo.componentDef.Description.Name);
                         Traverse.Create(foo).Property("componentDef").
                             SetValue(UpgradeWeapons(team.Combat.ActiveContract, foo.componentDef));
+                        Logger.LogDebug("Upgraded Weapon: " + foo.componentDef.Description.Name);
                     }
                     if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock"))
                     {
+                        Logger.Log("Original Upgrade: " + foo.componentDef.Description.Name);
                         Traverse.Create(foo).Property("componentDef").
                               SetValue(UpgradeUpgrades(team.Combat.ActiveContract, foo.componentDef));
+                        Logger.LogDebug("Upgraded Upgrade: " + foo.componentDef.Description.Name);
                     }
                 }
             }
@@ -166,16 +182,20 @@ namespace XLRP_Core.EnemySelection
             float num2 = ((float)contract.Override.finalDifficulty + sc.Salvage.VeryRareUpgradeChance) / sc.Salvage.UpgradeChanceDivisor;
             float num3 = ((float)contract.Override.finalDifficulty + sc.Salvage.RareUpgradeChance) / sc.Salvage.UpgradeChanceDivisor;
             float[] array = null;
-
+            Logger.LogDebug("Rarity Roll for Upgrades: " + num.ToString());
+            Logger.LogDebug("   " + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
             MechComponentDef mechComponentDef = def;
             if (num < num2)
             {
+                Logger.LogDebug("Very Rare Upgrade.");
                 array = sc.Salvage.VeryRareUpgradeLevel;
             }
             else if (num < num3)
             {
+                Logger.LogDebug("Rare Upgrade.");
                 array = sc.Salvage.RareUpgradeLevel;
             }
+            Logger.LogDebug("--------------");
             if (array != null)
             {
                 List<UpgradeDef_MDD> upgradesByRarityAndOwnership = MetadataDatabase.Instance.GetUpgradesByRarityAndOwnership(array);
@@ -198,17 +218,19 @@ namespace XLRP_Core.EnemySelection
             float num2 = ((float)contract.Override.finalDifficulty + sc.Salvage.VeryRareWeaponChance) / sc.Salvage.WeaponChanceDivisor;
             float num3 = ((float)contract.Override.finalDifficulty + sc.Salvage.RareWeaponChance) / sc.Salvage.WeaponChanceDivisor;
             float[] array = null;
-            Logger.Log(num.ToString());
-            Logger.Log(num2.ToString());
-            Logger.Log(num3.ToString());
+            Logger.LogDebug("Rarity Roll For Weapon: " + num.ToString());
+            Logger.LogDebug("   " + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
             if (num < num2)
             {
+                Logger.LogDebug("Very Rare Upgrade.");
                 array = sc.Salvage.VeryRareWeaponLevel;
             }
             else if (num < num3)
             {
+                Logger.LogDebug("Rare Upgrade.");
                 array = sc.Salvage.RareWeaponLevel;
             }
+            Logger.LogDebug("--------------");
             WeaponDef weaponDef = def as WeaponDef;
             if (array != null)
             {
