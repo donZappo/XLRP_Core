@@ -56,12 +56,12 @@ namespace XLRP_Core.EnemySelection
             public static void Postfix(ref UnitDef_MDD __result, MetadataDatabase mdd, TagSet unitTagSet,
                 DateTime? currentDate, TagSet companyTags, TagSet unitExcludedTagSet)
             {
-                var mechParent = __result.UnitDefID;
-                TagSet mechName = new TagSet { mechParent };
-                var potentialMechs = mdd.GetMatchingUnitDefs(mechName, unitExcludedTagSet, true, currentDate, companyTags);
-                potentialMechs.Add(__result);
-                potentialMechs.Shuffle();
-                __result = potentialMechs[0];
+                //var mechParent = __result.UnitDefID;
+                //TagSet mechName = new TagSet { mechParent };
+                //var potentialMechs = mdd.GetMatchingUnitDefs(mechName, unitExcludedTagSet, true, currentDate, companyTags);
+                //potentialMechs.Add(__result);
+                //potentialMechs.Shuffle();
+                //__result = potentialMechs[0];
             }
         }
 
@@ -88,11 +88,12 @@ namespace XLRP_Core.EnemySelection
                     }
                     if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock"))
                     {
-                        Logger.Log("Original Upgrade: " + foo.componentDef.Description.Name);
+                        Logger.LogDebug("Original Upgrade: " + foo.componentDef.Description.Name);
                         Traverse.Create(foo).Property("componentDef").
                               SetValue(UpgradeUpgrades(team.Combat.ActiveContract, foo.componentDef));
                         Logger.LogDebug("Upgraded Upgrade: " + foo.componentDef.Description.Name);
                     }
+                    Logger.LogDebug("=================");
                 }
             }
         }
@@ -195,7 +196,6 @@ namespace XLRP_Core.EnemySelection
                 Logger.LogDebug("Rare Upgrade.");
                 array = sc.Salvage.RareUpgradeLevel;
             }
-            Logger.LogDebug("--------------");
             if (array != null)
             {
                 List<UpgradeDef_MDD> upgradesByRarityAndOwnership = MetadataDatabase.Instance.GetUpgradesByRarityAndOwnership(array);
@@ -230,7 +230,6 @@ namespace XLRP_Core.EnemySelection
                 Logger.LogDebug("Rare Upgrade.");
                 array = sc.Salvage.RareWeaponLevel;
             }
-            Logger.LogDebug("--------------");
             WeaponDef weaponDef = def as WeaponDef;
             if (array != null)
             {

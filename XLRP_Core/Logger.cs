@@ -42,7 +42,7 @@ namespace XLRP_Core
             if (!Core.Settings.Debug) return;
             using (var writer = new StreamWriter(LogFilePath, false))
             {
-                writer.WriteLine($"{DateTime.Now.ToLongTimeString()} Extended_CE Init");
+                writer.WriteLine($"{DateTime.Now.ToLongTimeString()} XLRP-Core Init");
             }
         }
     }

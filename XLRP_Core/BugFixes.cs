@@ -23,10 +23,10 @@ namespace XLRP_Core
         {
             public static void Prefix(ref SimGameEventDef evt)
             {
-                if (Core.Settings.ObfuscateEventRequirements)
-                    Traverse.Create(evt)
-                        .Property("Options")
-                        .SetValue(evt.Options.Where(o => o.RequirementList.Length == 0).ToArray());
+                //if (Core.Settings.ObfuscateEventRequirements)
+                //    Traverse.Create(evt)
+                //        .Property("Options")
+                //        .SetValue(evt.Options.Where(o => o.RequirementList.Length == 0).ToArray());
             }
         }
 
