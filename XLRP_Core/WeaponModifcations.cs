@@ -9,6 +9,45 @@ using UnityEngine;
 
 namespace XLRP_Core.NewTech
 {
+    public static class COIL
+    {
+        [HarmonyPatch(typeof(Weapon), "GetProjectedCOILHeat")]
+        public static class Weapon_GetProjectedCOILHeat_Patch
+        {
+            public static void Postfix(Weapon __instance, ref float __result)
+            {
+                if (!Core.Settings.COIL_Heat_Multiply_EP)
+                    return;
+
+                var sim = UnityGameInstance.BattleTechGame.Simulation;
+                if (__instance.weaponDef.Type == WeaponType.COIL && !__instance.parent.SprintedLastRound
+                    && (__instance.parent.JumpedLastRound && !sim.CombatConstants.ResolutionConstants.COILUsesJumping))
+                {
+                    __result = __result * __instance.parent.EvasivePipsCurrent;
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Weapon), "HeatGenerated", MethodType.Getter)]
+        public static class Weapon_HeatGenerated_Patch
+        {
+            public static void Postfix (Weapon __instance, ref float __result)
+            {
+                if (!Core.Settings.COIL_Heat_Multiply_EP)
+                    return;
+
+                var sim = UnityGameInstance.BattleTechGame.Simulation;
+                if (__instance.weaponDef.Type == WeaponType.COIL && !__instance.parent.SprintedLastRound
+                    && (__instance.parent.JumpedLastRound && !sim.CombatConstants.ResolutionConstants.COILUsesJumping))
+                {
+                    __result = __result * __instance.parent.EvasivePipsCurrent;
+                }
+            }
+        }
+    }
+
+
+
     public static class Streaks
     {
         [HarmonyPatch(typeof(MissileLauncherEffect), "AllMissilesComplete")]
