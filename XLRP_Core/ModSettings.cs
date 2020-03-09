@@ -17,6 +17,7 @@ namespace XLRP_Core
         public bool ShowAllArgoUpgrades = true;
         public bool ObfuscateEventRequirements = false;
         public bool COIL_Heat_Multiply_EP = false;
+        public bool Tagged_Called_Shots = false;
 
         //Old settings
         public float BulwarkMalus = -1f;

@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Harmony;
 using BattleTech;
 using UnityEngine;
+using BattleTech.UI;
 
 namespace XLRP_Core.NewTech
 {
     public static class COIL
     {
+        //Modifies COILs to allow heat per shot
         [HarmonyPatch(typeof(Weapon), "GetProjectedCOILHeat")]
         public static class Weapon_GetProjectedCOILHeat_Patch
         {
@@ -46,9 +48,30 @@ namespace XLRP_Core.NewTech
         }
     }
 
+    public static class TAG
+    {
+        //Allows Tag to enable called shot
+        [HarmonyPatch(typeof(AbstractActor), "IsVulnerableToCalledShots")]
+        public static class AbstractActor_IsVulnerableToCalledShots_Patch
+        {
+            public static void Postfix(AbstractActor __instance, ref bool __result)
+            {
+                if (Core.Settings.Tagged_Called_Shots)
+                {
+                    var combat = UnityGameInstance.BattleTechGame.Combat;
+                    var combatHUDWeaponPanel = Resources.FindObjectsOfTypeAll<CombatHUDWeaponPanel>().First();
+                    var isTagged = combat.EffectManager.GetAllEffectsTargeting(__instance)
+                    .Any(x => x.EffectData.Description.Name.Contains("TAG MARKED"));
+                    if (isTagged)
+                        __result = true;
+                }
+            }
+        }
+    }
 
 
-    public static class Streaks
+        //Area that makes streaks not consume ammo upon firing.
+        public static class Streaks
     {
         [HarmonyPatch(typeof(MissileLauncherEffect), "AllMissilesComplete")]
         public static class MissileLauncherEffect_AllMissilesComplete
