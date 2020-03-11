@@ -17,8 +17,26 @@ namespace XLRP_Core
 {
     class BugFixes_QoL
     {
+        //PathNodeGrid.BuildPathNetwork AbstractActor.IsFriendly throws a million NREs
+        [HarmonyPatch(typeof(AbstractActor), "IsFriendly")]
+        public static class AbstractActor_IsFriendly_Patch
+        {
+            public static bool Prefix(AbstractActor __instance, ICombatant target)
+            {
+                if (Core.Settings.IsFriendlyBugSuppression)
+                {
+                    try
+                    {
+                        return __instance.team.IsFriendly(target.team);
+                    }
+                    catch { return false; }
+                }
+                return true;
+            }
+        }
+
         //This will show that requirements are not met for the events, but not say what exactly they are.
-        [HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
+            [HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
         public static class SimGameInterruptManager_QueueEventPopup_Patch
         {
             public static void Prefix(ref SimGameEventDef evt)

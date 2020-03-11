@@ -51,6 +51,22 @@ namespace XLRP_Core.NewTech
     public static class TAG
     {
         //Allows Tag to enable called shot
+        [HarmonyPatch(typeof(SelectionStateFire), "NeedsCalledShot", MethodType.Getter)]
+        public static class SelectionStateFire_NeedsCalledShot_Patch
+        {
+            public static void Postfix(SelectionStateFire __instance, ref bool __result)
+            {
+                if (Core.Settings.Tagged_Called_Shots && __instance.TargetedCombatant != null)
+                {
+                    var isTagged = __instance.TargetedCombatant.Combat.EffectManager.GetAllEffectsTargeting(__instance.TargetedCombatant)
+                        .Any(x => x.EffectData.Description.Name == "TAG MARKED");
+                    if (isTagged)
+                        __result = true;
+                }
+            }
+        }
+
+
         [HarmonyPatch(typeof(AbstractActor), "IsVulnerableToCalledShots")]
         public static class AbstractActor_IsVulnerableToCalledShots_Patch
         {
@@ -59,9 +75,8 @@ namespace XLRP_Core.NewTech
                 if (Core.Settings.Tagged_Called_Shots)
                 {
                     var combat = UnityGameInstance.BattleTechGame.Combat;
-                    var combatHUDWeaponPanel = Resources.FindObjectsOfTypeAll<CombatHUDWeaponPanel>().First();
                     var isTagged = combat.EffectManager.GetAllEffectsTargeting(__instance)
-                    .Any(x => x.EffectData.Description.Name.Contains("TAG MARKED"));
+                    .Any(x => x.EffectData.Description.Name == "TAG MARKED");
                     if (isTagged)
                         __result = true;
                 }
