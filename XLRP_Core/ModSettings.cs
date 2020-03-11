@@ -12,7 +12,24 @@ namespace XLRP_Core
         //New settings
         public bool UpgradeDegradedOpFor = false;
         public bool JumpStopsCalledShot = false;
+
         public bool UpgradeItems = false;
+        public float EliteRareUpgradeChance = 0;
+        public float VeryRareUpgradeChance = 0;
+        public float RareUpgradeChance = 0;
+        public float UpgradeChanceDivisor = 0;
+        public float[] EliteRareUpgradeLevel = { 0 };
+        public float[] VeryRareUpgradeLevel = { 0 };
+        public float[] RareUpgradeLevel = { 0 };
+
+        public float EliteRareWeaponChance = 0;
+        public float VeryRareWeaponChance = 0;
+        public float RareWeaponChance = 0;
+        public float WeaponChanceDivisor = 0;
+        public float[] EliteRareWeaponLevel = { 0 };
+        public float[] VeryRareWeaponLevel = { 0 };
+        public float[] RareWeaponLevel = { 0 };
+
         public bool UpgradePilots = false;
         public bool ShowAllArgoUpgrades = true;
         public bool ObfuscateEventRequirements = false;

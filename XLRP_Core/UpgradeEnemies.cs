@@ -180,21 +180,27 @@ namespace XLRP_Core.EnemySelection
             var sc = UnityGameInstance.BattleTechGame.Simulation.Constants;
             var rand = new Random();
             double num = rand.Next();
-            float num2 = ((float)contract.Override.finalDifficulty + sc.Salvage.VeryRareUpgradeChance) / sc.Salvage.UpgradeChanceDivisor;
-            float num3 = ((float)contract.Override.finalDifficulty + sc.Salvage.RareUpgradeChance) / sc.Salvage.UpgradeChanceDivisor;
+            float num1 = ((float)contract.Override.finalDifficulty + Core.Settings.EliteRareUpgradeChance) / Core.Settings.UpgradeChanceDivisor;
+            float num2 = ((float)contract.Override.finalDifficulty + Core.Settings.VeryRareUpgradeChance) / Core.Settings.UpgradeChanceDivisor;
+            float num3 = ((float)contract.Override.finalDifficulty + Core.Settings.RareUpgradeChance) / Core.Settings.UpgradeChanceDivisor;
             float[] array = null;
             Logger.LogDebug("Rarity Roll for Upgrades: " + num.ToString());
-            Logger.LogDebug("   " + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
+            Logger.LogDebug("   " + num1 + " Needed for Elite" + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
             MechComponentDef mechComponentDef = def;
-            if (num < num2)
+            if (num < num1)
+            {
+                Logger.LogDebug("Elite Rare Upgrade.");
+                array = Core.Settings.EliteRareUpgradeLevel;
+            }
+            else if (num < num2)
             {
                 Logger.LogDebug("Very Rare Upgrade.");
-                array = sc.Salvage.VeryRareUpgradeLevel;
+                array = Core.Settings.VeryRareUpgradeLevel;
             }
             else if (num < num3)
             {
                 Logger.LogDebug("Rare Upgrade.");
-                array = sc.Salvage.RareUpgradeLevel;
+                array = Core.Settings.RareUpgradeLevel;
             }
             if (array != null)
             {
@@ -215,20 +221,27 @@ namespace XLRP_Core.EnemySelection
             var rand = new Random();
             var sc = UnityGameInstance.BattleTechGame.Simulation.Constants;
             var num = rand.NextDouble();
-            float num2 = ((float)contract.Override.finalDifficulty + sc.Salvage.VeryRareWeaponChance) / sc.Salvage.WeaponChanceDivisor;
-            float num3 = ((float)contract.Override.finalDifficulty + sc.Salvage.RareWeaponChance) / sc.Salvage.WeaponChanceDivisor;
+            float num1 = ((float)contract.Override.finalDifficulty + Core.Settings.EliteRareWeaponChance) / Core.Settings.WeaponChanceDivisor;
+            float num2 = ((float)contract.Override.finalDifficulty + Core.Settings.VeryRareWeaponChance) / Core.Settings.WeaponChanceDivisor;
+            float num3 = ((float)contract.Override.finalDifficulty + Core.Settings.RareWeaponChance) / Core.Settings.WeaponChanceDivisor;
             float[] array = null;
             Logger.LogDebug("Rarity Roll For Weapon: " + num.ToString());
-            Logger.LogDebug("   " + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
-            if (num < num2)
+            Logger.LogDebug("   " + num1 + " Needed for Elite" + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
+
+            if (num < num1)
             {
                 Logger.LogDebug("Very Rare Upgrade.");
-                array = sc.Salvage.VeryRareWeaponLevel;
+                array = Core.Settings.EliteRareWeaponLevel;
+            }
+            else if (num < num2)
+            {
+                Logger.LogDebug("Very Rare Upgrade.");
+                array = Core.Settings.VeryRareWeaponLevel;
             }
             else if (num < num3)
             {
                 Logger.LogDebug("Rare Upgrade.");
-                array = sc.Salvage.RareWeaponLevel;
+                array = Core.Settings.RareWeaponLevel;
             }
             WeaponDef weaponDef = def as WeaponDef;
             if (array != null)
