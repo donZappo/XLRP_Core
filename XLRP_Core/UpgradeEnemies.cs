@@ -45,6 +45,10 @@ namespace XLRP_Core.EnemySelection
                 Logger.LogDebug("******************");
                 if(!__instance.IsLocalPlayer)
                     CheckForUpgrades(__instance);
+                else
+                {
+                    Tags_MDDExtenstions and 
+                }
             }
             
         }
