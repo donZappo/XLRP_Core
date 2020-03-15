@@ -23,6 +23,9 @@ namespace XLRP_Core
         {
             public static void Postfix(AAR_UnitStatusWidget __instance, SimGameState ___simState)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 var sim = UnityGameInstance.BattleTechGame.Simulation;
 
                 UnitResult unitResult = Traverse.Create(__instance).Field("UnitData").GetValue<UnitResult>();
@@ -47,26 +50,13 @@ namespace XLRP_Core
         {
             public static void Postfix(ref List<Localize.Text> __result, MechDef mechDef)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (mechDef != null && mechDef.MechTags.Contains("XLRP_R&R"))
                 {
                     Localize.Text RR_Text = new Localize.Text("REPAIR & REARM: 'Mech has armor damage that needs repair", Array.Empty<object>());
                     __result.Add(RR_Text);
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(SimGameState), "OnDayPassed")]
-        public static class SimGameState_OnDayPassed_Patch
-        {
-            static void Prefix(SimGameState __instance, int timeLapse)
-            {
-                foreach (var mech in __instance.ActiveMechs.Values)
-                {
-                    if (mech.MechTags.Contains("XLRP_R&R"))
-                    {
-                        //mech.MechTags.Where(tag => tag.StartsWith("XLRPArmor")).Do(x => __instance.CompanyTags.Remove(x));
-                        //mech.MechTags.Remove("XLRP_R&R");
-                    }
                 }
             }
         }
@@ -76,6 +66,9 @@ namespace XLRP_Core
         {
             static void Postfix(MechLabMechInfoWidget __instance, MechDef mechDef)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (mechDef != null && mechDef.MechTags.Contains("XLRP_R&R"))
                 {
                     Localize.Text RR_Text = new Localize.Text("REPAIR & REARM: 'Mech has armor damage that needs repair", Array.Empty<object>());
@@ -89,8 +82,11 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(MechLabPanel), "OnMaxArmor")]
         public static class MechLabPanel_OnMaxArmor_Patch
         {
-            static bool Prefix(MechLabPanel __instance)
+            public static bool Prefix(MechLabPanel __instance)
             {
+                if (!Core.Settings.RepairRearm)
+                    return true;
+
                 if (__instance.activeMechDef != null && __instance.activeMechDef.MechTags.Contains("XLRP_R&R"))
                 {
                     RepairArmor(__instance);
@@ -107,6 +103,9 @@ namespace XLRP_Core
         {
             public static bool Prefix(MechBayPanel __instance, MechBayMechUnitElement mechElement)
             {
+                if (!Core.Settings.RepairRearm)
+                    return true;
+
                 var sim = UnityGameInstance.BattleTechGame.Simulation;
                 MechDef mechDef = mechElement.MechDef;
                 WorkOrderEntry_MechLab workOrderEntry_MechLab = __instance.Sim.GetWorkOrderEntryForMech(mechDef);
@@ -287,6 +286,9 @@ namespace XLRP_Core
         {
             public static bool Prefix(MechLabPanel __instance)
             {
+                if (!Core.Settings.RepairRearm)
+                    return true;
+
                 if (!__instance.Initialized || !__instance.IsSimGame)
                 {
                     return false;
@@ -314,6 +316,9 @@ namespace XLRP_Core
         {
             public static void Prefix(SimGameState __instance, WorkOrderEntry_ModifyMechArmor order)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 MechDef mechDef = __instance.GetMechByID(order.MechLabParent.MechID);
                 if (mechDef.MechTags.Contains("XLRP_Armor_Repairing"))
                     order.SetMechLabComplete(true);
@@ -325,6 +330,9 @@ namespace XLRP_Core
         {
             public static void Postfix(SimGameState __instance, WorkOrderEntry entry)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (entry.Type == WorkOrderType.MechLabModifyArmor)
                 {
                     WorkOrderEntry_MechLab workOrderEntry_MechLab = entry as WorkOrderEntry_MechLab;
@@ -344,6 +352,9 @@ namespace XLRP_Core
         {
             public static void Postfix(SimGameState __instance, WorkOrderEntry entry)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (entry.Type == WorkOrderType.MechLabModifyArmor)
                 {
                     WorkOrderEntry_MechLab workOrderEntry_MechLab = entry as WorkOrderEntry_MechLab;
@@ -359,6 +370,9 @@ namespace XLRP_Core
         {
             public static void Postfix(MechBayPanel __instance)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (__instance.selectedMech.MechDef.MechTags.Contains("XLRP_Armor_Repairing"))
                     __instance.selectedMech.MechDef.MechTags.Remove("XLRP_Armor_Repairing");
             }
@@ -369,6 +383,9 @@ namespace XLRP_Core
         {
             public static void Postfix(MechLabPanel __instance)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (__instance.activeMechDef.MechTags.Contains("XLRP_Armor_Repairing"))
                     __instance.activeMechDef.MechTags.Remove("XLRP_Armor_Repairing");
             }
@@ -380,6 +397,9 @@ namespace XLRP_Core
             // Token: 0x0600001F RID: 31 RVA: 0x00002C48 File Offset: 0x00000E48
             public static void Postfix(object data, TextMeshProUGUI ___DetailsField)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 try
                 {
                     MechDef mechDef;
@@ -418,6 +438,9 @@ namespace XLRP_Core
         {
             public static void Postfix(MechLabPanel __instance)
             {
+                if (!Core.Settings.RepairRearm)
+                    return;
+
                 if (__instance.activeMechDef.MechTags.Contains("XLRP_R&R"))
                 {
                     //var repairGO = GameObject.Find("uixPrfBttn_BASE_iconActionButton-MANAGED-repair");
