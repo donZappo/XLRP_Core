@@ -85,7 +85,6 @@ namespace XLRP_Core.NewTech
     }
 }
 
-
 //        //Area that makes streaks not consume ammo upon firing.
 //        public static class Streaks
 //    {

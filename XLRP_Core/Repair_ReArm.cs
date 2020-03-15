@@ -426,7 +426,7 @@ namespace XLRP_Core
                     button.FindFirstChildNamed("iconBttn_innerBorder").SetActive(false);
                     var background = button.FindFirstChildNamed("iconBttn_bg").GetComponent<Image>();
                     background.GetComponent<Image>().color = new Color(137 / 255f, 61 / 255f, 18 / 255f, 1);
-
+                    
                 }
             }
         }
