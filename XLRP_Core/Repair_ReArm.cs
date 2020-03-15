@@ -93,11 +93,6 @@ namespace XLRP_Core
             {
                 if (__instance.activeMechDef != null && __instance.activeMechDef.MechTags.Contains("XLRP_R&R"))
                 {
-                    //var button = GameObject.Find("uixPrfBttn_BASE_iconActionButton-MANAGED-fillArmor");
-                    //button.FindFirstChildNamed("iconBttn_innerBorder").SetActive(false);
-                    //var background = button.FindFirstChildNamed("iconBttn_bg").GetComponent<Image>();
-                    //background.color = new Color(137, 61, 18, 1);
-
                     RepairArmor(__instance);
                     __instance.ValidateLoadout(false);
                     return false;
@@ -284,8 +279,6 @@ namespace XLRP_Core
                     AddButton("Repair", new Action(__instance.OnRepairAllAccepted), true, null).AddFader(new UIColorRef?(LazySingletonBehavior<UIManager>.Instance.UILookAndColorConstants.PopupBackfill), 0f, true).Render();
                 return false;
 
-                //Logger.Log("here");
-                //RepairArmorMechBay(__instance, mechElement.MechDef);
             }
         }
 
@@ -420,6 +413,23 @@ namespace XLRP_Core
             }
         }
 
+        [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
+        public static class MechLabPanel_LoadMech_Patch
+        {
+            public static void Postfix(MechLabPanel __instance)
+            {
+                if (__instance.activeMechDef.MechTags.Contains("XLRP_R&R"))
+                {
+                    //var repairGO = GameObject.Find("uixPrfBttn_BASE_iconActionButton-MANAGED-repair");
+                    //repairGO.GetComponent<HBSDOTweenButton>().OnClicked.AddListener(() => Logger.Log("POOP"));
+                    var button = GameObject.Find("uixPrfBttn_BASE_iconActionButton-MANAGED-fillArmor");
+                    button.FindFirstChildNamed("iconBttn_innerBorder").SetActive(false);
+                    var background = button.FindFirstChildNamed("iconBttn_bg").GetComponent<Image>();
+                    background.GetComponent<Image>().color = new Color(137 / 255f, 61 / 255f, 18 / 255f, 1);
+
+                }
+            }
+        }
 
         public static void RepairArmor(MechLabPanel mechLabPanel)
         {
