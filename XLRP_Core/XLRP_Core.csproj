@@ -77,7 +77,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Repair_ReArm.cs" />
     <Compile Include="WeaponModifcations.cs" />
     <Compile Include="NewTech\Artemis.cs" />
     <Compile Include="BugFixes.cs" />

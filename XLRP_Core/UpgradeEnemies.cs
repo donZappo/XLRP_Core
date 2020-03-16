@@ -44,75 +44,8 @@ namespace XLRP_Core.EnemySelection
             {
                 Logger.LogDebug("Collect Unit Baseline at start of turn");
                 Logger.LogDebug("******************");
-                if(!__instance.IsLocalPlayer)
+                if (!__instance.IsLocalPlayer)
                     CheckForUpgrades(__instance);
-                else
-                {
-                    foreach (var actor in __instance.units)
-                    {
-                        if (!(actor is  Mech mech))
-                            continue;
-
-                        bool correctArmor = false;
-                        var tags = actor.GetTags();
-                        float armorLoss = 1;
-                        foreach (var tag in tags)
-                        {
-                            if (tag.StartsWith($"XLRPArmor"))
-                            {
-                                string[] parsedString = tag.Split('_');
-                                armorLoss = float.Parse(parsedString[1]);
-                                correctArmor = true;
-                            }
-                        }
-                        if (correctArmor)
-                        {
-                            var HeadArmor = actor.StatCollection.GetValue<float>("Head.Armor");
-                            HeadArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("Head.Armor", HeadArmor);
-
-                            var LeftArmArmor = actor.StatCollection.GetValue<float>("LeftArm.Armor");
-                            LeftArmArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("LeftArm.Armor", LeftArmArmor);
-
-                            var LeftTorsoArmor = actor.StatCollection.GetValue<float>("LeftTorso.Armor");
-                            LeftTorsoArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("LeftTorso.Armor", LeftTorsoArmor);
-
-                            var CenterTorsoArmor = actor.StatCollection.GetValue<float>("CenterTorso.Armor");
-                            CenterTorsoArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("CenterTorso.Armor", CenterTorsoArmor);
-
-                            var RightTorsoArmor = actor.StatCollection.GetValue<float>("RightTorso.Armor");
-                            RightTorsoArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("RightTorso.Armor", RightTorsoArmor);
-
-                            var RightArmArmor = actor.StatCollection.GetValue<float>("RightArm.Armor");
-                            RightArmArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("RightArm.Armor", RightArmArmor);
-
-                            var LeftLegArmor = actor.StatCollection.GetValue<float>("LeftLeg.Armor");
-                            LeftLegArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("LeftLeg.Armor", LeftLegArmor);
-
-                            var RightLegArmor = actor.StatCollection.GetValue<float>("RightLeg.Armor");
-                            RightLegArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("RightLeg.Armor", RightLegArmor);
-
-                            var LeftTorsoRearArmor = actor.StatCollection.GetValue<float>("LeftTorso.RearArmor");
-                            LeftTorsoRearArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("LeftTorso.RearArmor", LeftTorsoRearArmor);
-
-                            var CenterTorsoRearArmor = actor.StatCollection.GetValue<float>("CenterTorso.RearArmor");
-                            CenterTorsoRearArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("CenterTorso.RearArmor", CenterTorsoRearArmor);
-
-                            var RightTorsoRearArmor = actor.StatCollection.GetValue<float>("RightTorso.RearArmor");
-                            RightTorsoRearArmor *= armorLoss;
-                            actor.StatCollection.Set<float>("RightTorso.RearArmor", RightTorsoRearArmor);
-                        }
-                    }
-                }
             }
             
         }

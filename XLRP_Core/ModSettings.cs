@@ -13,7 +13,6 @@ namespace XLRP_Core
         public bool UpgradeDegradedOpFor = false;
         public bool JumpStopsCalledShot = false;
         public bool IsFriendlyBugSuppression = false;
-        public bool RepairRearm = false;
 
         public bool UpgradeItems = false;
         public float EliteRareUpgradeChance = 0;
