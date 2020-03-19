@@ -22,8 +22,8 @@ namespace XLRP_Core.NewTech
                     return;
 
                 var sim = UnityGameInstance.BattleTechGame.Simulation;
-                if (__instance.weaponDef.Type == WeaponType.COIL && !__instance.parent.SprintedLastRound
-                    && (__instance.parent.JumpedLastRound && !sim.CombatConstants.ResolutionConstants.COILUsesJumping))
+                if (__instance.weaponDef.Type == WeaponType.COIL && (!__instance.parent.SprintedLastRound
+                   || (__instance.parent.JumpedLastRound && sim.CombatConstants.ResolutionConstants.COILUsesJumping)))
                 {
                     __result = __result * __instance.parent.EvasivePipsCurrent;
                 }
@@ -39,8 +39,8 @@ namespace XLRP_Core.NewTech
                     return;
 
                 var sim = UnityGameInstance.BattleTechGame.Simulation;
-                if (__instance.weaponDef.Type == WeaponType.COIL && !__instance.parent.SprintedLastRound
-                    && (__instance.parent.JumpedLastRound && !sim.CombatConstants.ResolutionConstants.COILUsesJumping))
+                if (__instance.weaponDef.Type == WeaponType.COIL && (!__instance.parent.SprintedLastRound
+                    || (__instance.parent.JumpedLastRound && sim.CombatConstants.ResolutionConstants.COILUsesJumping)))
                 {
                     __result = __result * __instance.parent.EvasivePipsCurrent;
                 }
