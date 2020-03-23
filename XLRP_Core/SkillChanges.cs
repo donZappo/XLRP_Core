@@ -15,7 +15,7 @@ namespace XLRP_Core.SkillChanges
         {
             public static void Postfix(AbstractActor __instance, ref bool __result)
             {
-                if (__instance.HasJumpedThisRound && Core.Settings.JumpStopsCalledShot)
+                if ((__instance.JumpedLastRound || __instance.HasJumpedThisRound) && Core.Settings.JumpStopsCalledShot)
                     __result = false;
             }
         }
