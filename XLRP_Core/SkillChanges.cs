@@ -5,18 +5,23 @@ using System.Text;
 using Harmony;
 using BattleTech;
 using Localize;
+using BattleTech.UI;
 
 namespace XLRP_Core.SkillChanges
 {
     public static class CalledShotMods
     {
-        [HarmonyPatch(typeof(AbstractActor), "CanUseOffensivePush")]
-        public static class AbstractActor_CanUseOffensivePush_Patch
+        //Disable called shots for mechs that have jumped during the same turn.
+        [HarmonyPatch(typeof(CombatHUDMechwarriorTray), "ResetMechwarriorButtons")]
+        public static class CombatHUDMechwarriorTray_ResetMechwarriorButtons_Patch
         {
-            public static void Postfix(AbstractActor __instance, ref bool __result)
+            public static void Postfix(CombatHUDMechwarriorTray __instance, AbstractActor actor)
             {
-                if ((__instance.JumpedLastRound || __instance.HasJumpedThisRound) && Core.Settings.JumpStopsCalledShot)
-                    __result = false;
+                if (actor.HasJumpedThisRound && Core.Settings.JumpStopsCalledShot)
+                {
+                    __instance.MoraleButtons[0].DisableButton();
+                    __instance.MoraleButtons[0].isAutoHighlighted = false;
+                }
             }
         }
     }
