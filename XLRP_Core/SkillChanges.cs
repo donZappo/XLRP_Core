@@ -17,6 +17,9 @@ namespace XLRP_Core.SkillChanges
         {
             public static void Postfix(CombatHUDMechwarriorTray __instance, AbstractActor actor)
             {
+                if (actor == null || actor.UnitType != UnitType.Mech || __instance.MoraleButtons[0] == null)
+                    return;
+
                 if (Core.Settings.JumpStopsCalledShot && actor.HasJumpedThisRound && actor.SkillTactics < Core.Settings.TacticsForJumpedCS)
                 {
                     __instance.MoraleButtons[0].DisableButton();
