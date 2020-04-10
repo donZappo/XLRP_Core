@@ -17,7 +17,7 @@ namespace XLRP_Core.EnemySelection
         [HarmonyPatch(typeof(TurnDirector), "StartFirstRound")]
         public static class TurnDirector_StarFirstRound_Patch
         {
-            private static void Postfix(TurnDirector __instance)
+            public static void Postfix(TurnDirector __instance)
             {
                 Logger.LogDebug("Start First Round");
                 Logger.LogDebug("*********");
@@ -26,6 +26,8 @@ namespace XLRP_Core.EnemySelection
                     foreach (var actor in team.units)
                     {
                         Logger.LogDebug("UnitName: " + actor.UnitName);
+                        foreach (var tag in actor.GetTags())
+                            Logger.LogDebug(tag);
                         Logger.LogDebug("MaxWalkDistance: " + actor.MaxWalkDistance.ToString());
                         Logger.LogDebug("MaxSpeed: " + actor.MaxSpeed.ToString());
                         Logger.LogDebug("MaxSprintDistance: " + actor.MaxSprintDistance.ToString());
@@ -57,12 +59,12 @@ namespace XLRP_Core.EnemySelection
             public static void Postfix(ref UnitDef_MDD __result, MetadataDatabase mdd, TagSet unitTagSet,
                 DateTime? currentDate, TagSet companyTags, TagSet unitExcludedTagSet)
             {
-                //var mechParent = __result.UnitDefID;
-                //TagSet mechName = new TagSet { mechParent };
-                //var potentialMechs = mdd.GetMatchingUnitDefs(mechName, unitExcludedTagSet, true, currentDate, companyTags);
-                //potentialMechs.Add(__result);
-                //potentialMechs.Shuffle();
-                //__result = potentialMechs[0];
+                var mechParent = __result.UnitDefID;
+                TagSet mechName = new TagSet { mechParent };
+                var potentialMechs = mdd.GetMatchingUnitDefs(mechName, unitExcludedTagSet, true, currentDate, companyTags);
+                potentialMechs.Add(__result);
+                potentialMechs.Shuffle();
+                __result = potentialMechs[0];
             }
         }
 

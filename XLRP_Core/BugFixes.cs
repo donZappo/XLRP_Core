@@ -17,8 +17,21 @@ namespace XLRP_Core
 {
     class BugFixes_QoL
     {
+        //If mechs with COIL weapons don't move before they fire, they fire with their evasive pips generated from the previous round.
+        [HarmonyPatch(typeof(Weapon), "ShotsWhenFired", MethodType.Getter)]
+        public static class Weapon_ShotsWhenFired_Patch
+        {
+            public static void Prefix(Weapon __instance, ref int __result)
+            {
+                var actor = __instance.parent;
+                if (!actor.HasMovedThisRound && __instance.weaponDef.Type == WeaponType.COIL)
+                    __result = 1;
+            }
+        }
+
+
         //PathNodeGrid.BuildPathNetwork AbstractActor.IsFriendly throws a million NREs
-        [HarmonyPatch(typeof(AbstractActor), "IsFriendly")]
+            [HarmonyPatch(typeof(AbstractActor), "IsFriendly")]
         public static class AbstractActor_IsFriendly_Patch
         {
             public static bool Prefix(AbstractActor __instance, ICombatant target)

@@ -56,7 +56,14 @@ namespace XLRP_Core.NewTech
         {
             public static void Postfix(SelectionStateFire __instance, ref bool __result)
             {
-                if (Core.Settings.Tagged_Called_Shots && __instance.TargetedCombatant != null)
+                if (__instance.TargetedCombatant == null || __instance.TargetedCombatant.Combat.EffectManager == null)
+                    return;
+
+                if (__instance.TargetedCombatant.UnitType != UnitType.Mech &&
+                    __instance.TargetedCombatant.UnitType != UnitType.Vehicle)
+                    return;
+
+                if (Core.Settings.Tagged_Called_Shots)
                 {
                     var isTagged = __instance.TargetedCombatant.Combat.EffectManager.GetAllEffectsTargeting(__instance.TargetedCombatant)
                         .Any(x => x.EffectData.Description.Name == "TAG MARKED");
@@ -74,6 +81,9 @@ namespace XLRP_Core.NewTech
             {
                 if (Core.Settings.Tagged_Called_Shots)
                 {
+                    if (__instance.UnitType != UnitType.Mech && __instance.UnitType != UnitType.Vehicle)
+                        return;
+
                     var combat = UnityGameInstance.BattleTechGame.Combat;
                     var isTagged = combat.EffectManager.GetAllEffectsTargeting(__instance)
                     .Any(x => x.EffectData.Description.Name == "TAG MARKED");
