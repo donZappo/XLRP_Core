@@ -21,10 +21,10 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(Weapon), "ShotsWhenFired", MethodType.Getter)]
         public static class Weapon_ShotsWhenFired_Patch
         {
-            public static void Prefix(Weapon __instance, ref int __result)
+            public static void Postfix(Weapon __instance, ref int __result)
             {
                 var actor = __instance.parent;
-                if (!actor.HasMovedThisRound && __instance.weaponDef.Type == WeaponType.COIL)
+                if (actor.DistMovedThisRound == 0 && __instance.weaponDef.Type == WeaponType.COIL)
                     __result = 1;
             }
         }
