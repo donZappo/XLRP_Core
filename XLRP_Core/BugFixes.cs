@@ -24,7 +24,8 @@ namespace XLRP_Core
             public static void Postfix(Weapon __instance, ref int __result)
             {
                 var actor = __instance.parent;
-                if (actor.DistMovedThisRound == 0 && __instance.weaponDef.Type == WeaponType.COIL)
+
+                if (!actor.HasMovedThisRound && __instance.weaponDef.Type == WeaponType.COIL)
                     __result = 1;
             }
         }
