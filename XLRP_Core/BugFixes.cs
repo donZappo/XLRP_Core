@@ -17,6 +17,16 @@ namespace XLRP_Core
 {
     class BugFixes_QoL
     {
+        //Mech blue portraits in combat stick around if free sensor lock is enabled. 
+        [HarmonyPatch(typeof(CombatHUDMechwarriorTray), "ShowMoraleBackground")]
+        public static class CombatHUDMechwarriorTray_ShowMoraleBackground_Patch
+        {
+            public static void Prefix(ref bool show)
+            {
+                show = false;
+            }
+        }
+
         //If mechs with COIL weapons don't move before they fire, they fire with their evasive pips generated from the previous round.
         [HarmonyPatch(typeof(Weapon), "ShotsWhenFired", MethodType.Getter)]
         public static class Weapon_ShotsWhenFired_Patch
