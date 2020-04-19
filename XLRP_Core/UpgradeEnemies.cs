@@ -190,6 +190,9 @@ namespace XLRP_Core.EnemySelection
             Logger.LogDebug("Rarity Roll for Upgrades: " + num.ToString());
             Logger.LogDebug("   " + num1 + " Needed for Elite" + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
             MechComponentDef mechComponentDef = def;
+            if (mechComponentDef.ComponentSubType == MechComponentType.NotSet)
+                return mechComponentDef;
+
             if (num < num1)
             {
                 Logger.LogDebug("Elite Rare Upgrade.");
@@ -247,6 +250,9 @@ namespace XLRP_Core.EnemySelection
                 array = Core.Settings.RareWeaponLevel;
             }
             WeaponDef weaponDef = def as WeaponDef;
+            if (weaponDef.WeaponSubType == WeaponSubType.NotSet)
+                return weaponDef;
+
             if (array != null)
             {
                 List<WeaponDef_MDD> weaponsByTypeAndRarityAndOwnership = MetadataDatabase.Instance.GetWeaponsByTypeAndRarityAndOwnership(weaponDef.WeaponSubType, array);
