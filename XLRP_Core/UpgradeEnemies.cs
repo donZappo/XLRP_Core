@@ -46,8 +46,8 @@ namespace XLRP_Core.EnemySelection
             {
                 Logger.LogDebug("Collect Unit Baseline at start of turn");
                 Logger.LogDebug("******************");
-                if (!__instance.IsLocalPlayer)
-                    CheckForUpgrades(__instance);
+                //if (!__instance.IsLocalPlayer)
+                //    CheckForUpgrades(__instance);
             }
             
         }
