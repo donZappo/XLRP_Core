@@ -17,6 +17,26 @@ namespace XLRP_Core
 {
     class BugFixes_QoL
     {
+        //Area set up for logging methods for data.
+        //[HarmonyPatch(typeof(AAR_SalvageChosen), "SortBy_Name")]
+        //public static class LogAMethod
+        //{
+        //    public static void Prefix(InventoryItemElement_NotListView a, InventoryItemElement_NotListView b)
+        //    {
+        //        try
+        //        {
+        //            Logger.Log("================");
+        //            Logger.Log("a " + a.controller.GetName());
+        //            Logger.Log("b " + b.controller.GetName());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Logger.Log("Name Bad");
+        //        }
+        //    }
+        //}
+
+
         //Mech blue portraits in combat stick around if free sensor lock is enabled. 
         [HarmonyPatch(typeof(CombatHUDMechwarriorTray), "ShowMoraleBackground")]
         public static class CombatHUDMechwarriorTray_ShowMoraleBackground_Patch
