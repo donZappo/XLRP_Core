@@ -82,14 +82,16 @@ namespace XLRP_Core.EnemySelection
                 actor.EncounterTags.Add("Upgraded");
                 foreach (var foo in actor.allComponents)
                 {
-                    if (foo.componentType == ComponentType.Weapon && foo.componentDef.ComponentTags.Contains("component_type_stock"))
+                    if (foo.componentType == ComponentType.Weapon && foo.componentDef.ComponentTags.Contains("component_type_stock") &&
+                        !foo.componentDef.ComponentTags.Contains("component_noupgrade"))
                     {
                         Logger.LogDebug("Original Weapon: " + foo.componentDef.Description.Name);
                         Traverse.Create(foo).Property("componentDef").
                             SetValue(UpgradeWeapons(team.Combat.ActiveContract, foo.componentDef));
                         Logger.LogDebug("Upgraded Weapon: " + foo.componentDef.Description.Name);
                     }
-                    if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock"))
+                    if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock") &&
+                        !foo.componentDef.ComponentTags.Contains("component_noupgrade"))
                     {
                         Logger.LogDebug("Original Upgrade: " + foo.componentDef.Description.Name);
                         Traverse.Create(foo).Property("componentDef").
@@ -190,7 +192,7 @@ namespace XLRP_Core.EnemySelection
             Logger.LogDebug("Rarity Roll for Upgrades: " + num.ToString());
             Logger.LogDebug("   " + num1 + " Needed for Elite" + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
             MechComponentDef mechComponentDef = def;
-            if (mechComponentDef.ComponentSubType == MechComponentType.NotSet)
+            if (mechComponentDef.ComponentSubType == MechComponentType.NotSet || mechComponentDef.ComponentTags.Contains("BLACKLISTED"))
                 return mechComponentDef;
 
             if (num < num1)
@@ -250,7 +252,7 @@ namespace XLRP_Core.EnemySelection
                 array = Core.Settings.RareWeaponLevel;
             }
             WeaponDef weaponDef = def as WeaponDef;
-            if (weaponDef.WeaponSubType == WeaponSubType.NotSet)
+            if (weaponDef.WeaponSubType == WeaponSubType.NotSet || weaponDef.ComponentTags.Contains("BLACKLISTED"))
                 return weaponDef;
 
             if (array != null)
