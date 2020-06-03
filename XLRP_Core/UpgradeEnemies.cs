@@ -90,7 +90,7 @@ namespace XLRP_Core.EnemySelection
                             SetValue(UpgradeWeapons(team.Combat.ActiveContract, foo.componentDef));
                         Logger.LogDebug("Upgraded Weapon: " + foo.componentDef.Description.Name);
                     }
-                    if (foo.componentType == ComponentType.Upgrade && foo.componentDef.ComponentTags.Contains("component_type_stock") &&
+                    if ((foo.componentType == ComponentType.Upgrade || foo.componentType == ComponentType.HeatSink) && foo.componentDef.ComponentTags.Contains("component_type_stock") &&
                         !foo.componentDef.ComponentTags.Contains("component_noupgrade"))
                     {
                         Logger.LogDebug("Original Upgrade: " + foo.componentDef.Description.Name);
@@ -192,7 +192,7 @@ namespace XLRP_Core.EnemySelection
             Logger.LogDebug("Rarity Roll for Upgrades: " + num.ToString());
             Logger.LogDebug("   " + num1 + " Needed for Elite" + num2 + " Needed for Very Rare; " + num3 + " Needed for Rare");
             MechComponentDef mechComponentDef = def;
-            if (mechComponentDef.ComponentSubType == MechComponentType.NotSet || mechComponentDef.ComponentTags.Contains("BLACKLISTED"))
+            if (mechComponentDef.ComponentTags.Contains("BLACKLISTED"))
                 return mechComponentDef;
 
             if (num < num1)
@@ -212,13 +212,20 @@ namespace XLRP_Core.EnemySelection
             }
             if (array != null)
             {
+                string upgradeTag = def.ComponentTags.FirstOrDefault(x => x.StartsWith("BR_UpgradeTag"));
+                if (upgradeTag == null)
+                    return mechComponentDef;
                 List<UpgradeDef_MDD> upgradesByRarityAndOwnership = MetadataDatabase.Instance.GetUpgradesByRarityAndOwnership(array);
                 if (upgradesByRarityAndOwnership != null && upgradesByRarityAndOwnership.Count > 0)
                 {
-                    upgradesByRarityAndOwnership.Shuffle<UpgradeDef_MDD>();
-                    UpgradeDef_MDD upgradeDef_MDD = upgradesByRarityAndOwnership[0];
                     var DataManager = (DataManager)Traverse.Create(contract).Field("dataManager").GetValue();
-                    mechComponentDef = DataManager.UpgradeDefs.Get(upgradeDef_MDD.UpgradeDefID);
+                    upgradesByRarityAndOwnership.Shuffle();
+                    foreach (var upgradeDef_MDD in upgradesByRarityAndOwnership)
+                    {
+                        var tempMCD = DataManager.UpgradeDefs.Get(upgradeDef_MDD.UpgradeDefID);
+                        if (tempMCD.ComponentTags.Contains(upgradeTag))
+                            return tempMCD;
+                    }
                 }
             }
             return mechComponentDef;
