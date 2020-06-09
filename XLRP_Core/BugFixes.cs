@@ -48,17 +48,18 @@ namespace XLRP_Core
         }
 
         //If mechs with COIL weapons don't move before they fire, they fire with their evasive pips generated from the previous round.
-        [HarmonyPatch(typeof(Weapon), "ShotsWhenFired", MethodType.Getter)]
-        public static class Weapon_ShotsWhenFired_Patch
-        {
-            public static void Postfix(Weapon __instance, ref int __result)
-            {
-                var actor = __instance.parent;
-
-                if (!actor.HasMovedThisRound && __instance.weaponDef.Type == WeaponType.COIL)
-                    __result = 1;
-            }
-        }
+        //****** This is still a problem. But by enabling this code mechs cannot generate bonus shots when meleeing. 
+        //[HarmonyPatch(typeof(Weapon), "ShotsWhenFired", MethodType.Getter)]
+        //public static class Weapon_ShotsWhenFired_Patch
+        //{
+        //    public static void Postfix(Weapon __instance, ref int __result)
+        //    {
+        //        var actor = __instance.parent;
+        //        actor.HasSprintedThisRound
+        //        if (!actor.HasMovedThisRound && __instance.weaponDef.Type == WeaponType.COIL)
+        //            __result = 1;
+        //    }
+        //}
 
 
         //PathNodeGrid.BuildPathNetwork AbstractActor.IsFriendly throws a million NREs
