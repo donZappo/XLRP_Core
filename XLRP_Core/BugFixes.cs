@@ -18,24 +18,43 @@ namespace XLRP_Core
     class BugFixes_QoL
     {
         //Area set up for logging methods for data.
-        //[HarmonyPatch(typeof(AAR_SalvageChosen), "SortBy_Name")]
-        //public static class LogAMethod
+        [HarmonyPatch(typeof(SimGameState))]
+        [HarmonyPatch("GetMechComponentRefForUID")]
+        public static class LogAMethod
+        {
+            public static void Prefix(MechDef mech, string simGameUID, string componentID, ComponentType componentType)
+            {
+                try
+                {
+                    Logger.Log("================");
+                    Logger.Log($"mech exist {mech != null}");
+                    Logger.Log($"mech: {mech.Name}");
+                    Logger.Log($"simGameUID exist {simGameUID != null}");
+                    Logger.Log($"simGameUID: {simGameUID}");
+                    Logger.Log($"componentID exist {componentID != null}");
+                    Logger.Log($"componentID: {componentID}");
+                    Logger.Log($"componentType exist {componentType != null}");
+                    Logger.Log($"componentType: {componentType}");
+                }
+                catch (Exception e)
+                {
+                    Logger.Log("Name Bad");
+                }
+            }
+        }
+
+        ////If mechs with COIL weapons don't move before they fire, they fire with their evasive pips generated from the previous round.
+        //[HarmonyPatch(typeof(Weapon), "ShotsWhenFired", MethodType.Getter)]
+        //public static class Weapon_ShotsWhenFired_Patch
         //{
-        //    public static void Prefix(InventoryItemElement_NotListView a, InventoryItemElement_NotListView b)
+        //    public static void Postfix(Weapon __instance, ref int __result)
         //    {
-        //        try
-        //        {
-        //            Logger.Log("================");
-        //            Logger.Log("a " + a.controller.GetName());
-        //            Logger.Log("b " + b.controller.GetName());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            Logger.Log("Name Bad");
-        //        }
+        //        var actor = __instance.parent;
+
+        //        if (!actor.HasMovedThisRound && __instance.weaponDef.Type == WeaponType.COIL)
+        //            __result = 1;
         //    }
         //}
-
 
         //Mech blue portraits in combat stick around if free sensor lock is enabled. 
         [HarmonyPatch(typeof(CombatHUDMechwarriorTray), "ShowMoraleBackground")]
