@@ -80,7 +80,7 @@
     <Compile Include="WeaponModifcations.cs" />
     <Compile Include="NewTech\Artemis.cs" />
     <Compile Include="BugFixes.cs" />
-    <Compile Include="BulwarkPatch.cs" />
+    <Compile Include="PilotEjection.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="DifficultySettings.cs" />
     <Compile Include="UpgradeEnemies.cs" />
@@ -244,6 +244,6 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\XLRP-Core\" /Y</PostBuildEvent>
+    <PostBuildEvent>xcopy "$(TargetPath)" "C:\Program Files (x86)\Steam\steamapps\common\BATTLETECH\Mods\BTR-Core\" /Y</PostBuildEvent>
   </PropertyGroup>
 </Project>
