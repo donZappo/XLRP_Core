@@ -49,6 +49,7 @@ namespace XLRP_Core
         public int LessResolveAtMaxMorale = 5;
 
         public float ArtemisIVBonus = 1.5f;
+        public bool correctMeleeMultipliers = true;
 
     }
 }
