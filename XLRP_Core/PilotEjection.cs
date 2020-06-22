@@ -57,25 +57,4 @@ namespace XLRP_Core
             }
         }
     }
-
-    //[HarmonyPatch(typeof(Pilot), "InjuryReasonDescription", MethodType.Getter)]
-    //public static class Pilot_InjuryReasonDescription_Patch
-    //{
-    //    public static void Postfix(Pilot __instance, ref string __result)
-    //    {
-    //        try
-    //        {
-    //            if (__instance.InjuryReason == Pilot_InjuryReasonDescription_Patch.InjuryReasonEjection)
-    //            {
-    //                __result = "EJECTED";
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            Logger.Error(e);
-    //        }
-    //    }
-
-    //    public static InjuryReason InjuryReasonEjection = (InjuryReason)102;
-    //}
 }
