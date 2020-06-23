@@ -23,16 +23,6 @@ namespace XLRP_Core.EnemySelection
                 Logger.LogDebug("*********");
                 foreach(var team in __instance.Combat.Teams)
                 {
-                    foreach (var actor in team.units)
-                    {
-                        Logger.LogDebug("UnitName: " + actor.UnitName);
-                        foreach (var tag in actor.GetTags())
-                            Logger.LogDebug(tag);
-                        Logger.LogDebug("MaxWalkDistance: " + actor.MaxWalkDistance.ToString());
-                        Logger.LogDebug("MaxSpeed: " + actor.MaxSpeed.ToString());
-                        Logger.LogDebug("MaxSprintDistance: " + actor.MaxSprintDistance.ToString());
-                        Logger.LogDebug("======================");
-                    }
                     if (!team.IsLocalPlayer)
                         CheckForUpgrades(team);
                 }
@@ -44,10 +34,8 @@ namespace XLRP_Core.EnemySelection
         {
             public static void Postfix(Team __instance)
             {
-                Logger.LogDebug("Collect Unit Baseline at start of turn");
-                Logger.LogDebug("******************");
-                //if (!__instance.IsLocalPlayer)
-                //    CheckForUpgrades(__instance);
+                if (!__instance.IsLocalPlayer)
+                    CheckForUpgrades(__instance);
             }
             
         }

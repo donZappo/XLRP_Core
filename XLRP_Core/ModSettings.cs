@@ -15,6 +15,8 @@ namespace XLRP_Core
         public bool IsFriendlyBugSuppression = false;
         public int TacticsForJumpedCS = 10;
 
+        public bool RemoveSpottingExploit = true;
+
         public bool UpgradeItems = false;
         public float EliteRareUpgradeChance = 0;
         public float VeryRareUpgradeChance = 0;

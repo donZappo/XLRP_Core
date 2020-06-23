@@ -20,6 +20,89 @@ namespace XLRP_Core
 {
     class BugFixes_QoL
     {
+        //////Why are melee attacks against vehicles not increasing? It appears to have been removed with CAC. Welcome back! 
+        //[HarmonyPatch(typeof(ListElementController_BASE_NotListView), "RefreshQuantity")]
+        //public static class Logging_Method_Patch
+        //{
+        //    public static void Prefix(ListElementController_BASE_NotListView __instance, InventoryItemElement_NotListView theWidget)
+        //    {
+        //        Logger.Log("****************QUANTITY THROW**************");
+        //        Logger.Log($"Quantity: {theWidget.quantity}");
+        //        Logger.Log($"Quantity Element null?: {theWidget.qtyElement == null}");
+        //        Logger.Log($"Quantity Element Name: {theWidget.qtyElement.name}");
+        //        Logger.Log($"Quantity Value null?: {theWidget.quantityValue == null}");
+        //        Logger.Log($"Quantity Value Color?: {theWidget.quantityValueColor == null}");
+        //    }
+        //}
+
+
+        //Boost AI sensor and spotter range to prevent them from being exploited during combat.
+        [HarmonyPatch(typeof(AbstractActor), "ResolveAttackSequence")]
+        public static class AbstractActor_ResolveAttackSequence_Patch
+        {
+            public static void Prefix(AbstractActor __instance)
+            {
+                if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted") 
+                    && !__instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                {
+                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 750);
+                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 750);
+                    __instance.EncounterTags.Add("BTR_SensorsAdjusted");
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(Mech), "ResolveAttackSequence")]
+        public static class Mech_ResolveAttackSequence_Patch
+        {
+
+            public static void Prefix(Mech __instance)
+            {
+                if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
+                    && !__instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                {
+                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 750);
+                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 750);
+                    __instance.EncounterTags.Add("BTR_SensorsAdjusted");
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(Vehicle), "ResolveAttackSequence")]
+        public static class Vehicle_ResolveAttackSequence_Patch
+        {
+
+            public static void Prefix(Vehicle __instance)
+            {
+                if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
+                    && !__instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                {
+                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 750);
+                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 750);
+                    __instance.EncounterTags.Add("BTR_SensorsAdjusted");
+                }
+            }
+        }
+
+
+        [HarmonyPatch(typeof(Turret), "ResolveAttackSequence")]
+        public static class Turret_ResolveAttackSequence_Patch
+        {
+
+            public static void Prefix(Turret __instance)
+            {
+                if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
+                    && !__instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                {
+                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 750);
+                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 750);
+                    __instance.EncounterTags.Add("BTR_SensorsAdjusted");
+                }
+            }
+        }
+
+
         ////Why are melee attacks against vehicles not increasing? It appears to have been removed with CAC. Welcome back! 
         [HarmonyPatch(typeof(AdvWeaponHitInfoRec), "Apply")]
         public static class AdvWeaponHitInfoRec_Apply_Patch
