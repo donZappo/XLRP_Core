@@ -21,19 +21,19 @@ namespace XLRP_Core
 {
     class BugFixes_QoL
     {
-        //Slight bug fix for Pathing Grid errors.
-        [HarmonyPatch(typeof(Pathing), "ResetPathGridIfTouching")]
-        public static class Logging_ResetPathGridIfTouching_Patch
-        {
-            static PathingCapabilitiesDef pathingCapStorage = null;
-            public static void Prefix(Pathing __instance, List<Rect> Rectangles, Vector3 origin, float beginAngle, AbstractActor actor)
-            {
-                if (__instance.PathingCaps == null)
-                    __instance.PathingCaps = pathingCapStorage;
-                else
-                    pathingCapStorage = __instance.PathingCaps;
-            }
-        }
+        ////Slight bug fix for Pathing Grid errors.
+        //[HarmonyPatch(typeof(Pathing), "ResetPathGridIfTouching")]
+        //public static class Logging_ResetPathGridIfTouching_Patch
+        //{
+        //    static PathingCapabilitiesDef pathingCapStorage = null;
+        //    public static void Prefix(Pathing __instance, List<Rect> Rectangles, Vector3 origin, float beginAngle, AbstractActor actor)
+        //    {
+        //        if (__instance.PathingCaps == null)
+        //            __instance.PathingCaps = pathingCapStorage;
+        //        else
+        //            pathingCapStorage = __instance.PathingCaps;
+        //    }
+        //}
 
         //Boost AI sensor and spotter range to prevent them from being exploited during combat.
         [HarmonyPatch(typeof(AbstractActor), "ResolveAttackSequence")]
