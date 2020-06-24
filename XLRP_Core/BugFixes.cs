@@ -15,26 +15,25 @@ using System.Reflection;
 using CustomAmmoCategoriesPatches;
 using CustomAmmoCategoriesPathes;
 using CustAmmoCategories;
+using BestHTTP.SocketIO;
 
 namespace XLRP_Core
 {
     class BugFixes_QoL
     {
-        //////Why are melee attacks against vehicles not increasing? It appears to have been removed with CAC. Welcome back! 
-        //[HarmonyPatch(typeof(ListElementController_BASE_NotListView), "RefreshQuantity")]
-        //public static class Logging_Method_Patch
-        //{
-        //    public static void Prefix(ListElementController_BASE_NotListView __instance, InventoryItemElement_NotListView theWidget)
-        //    {
-        //        Logger.Log("****************QUANTITY THROW**************");
-        //        Logger.Log($"Quantity: {theWidget.quantity}");
-        //        Logger.Log($"Quantity Element null?: {theWidget.qtyElement == null}");
-        //        Logger.Log($"Quantity Element Name: {theWidget.qtyElement.name}");
-        //        Logger.Log($"Quantity Value null?: {theWidget.quantityValue == null}");
-        //        Logger.Log($"Quantity Value Color?: {theWidget.quantityValueColor == null}");
-        //    }
-        //}
-
+        //Slight bug fix for Pathing Grid errors.
+        [HarmonyPatch(typeof(Pathing), "ResetPathGridIfTouching")]
+        public static class Logging_ResetPathGridIfTouching_Patch
+        {
+            static PathingCapabilitiesDef pathingCapStorage = null;
+            public static void Prefix(Pathing __instance, List<Rect> Rectangles, Vector3 origin, float beginAngle, AbstractActor actor)
+            {
+                if (__instance.PathingCaps == null)
+                    __instance.PathingCaps = pathingCapStorage;
+                else
+                    pathingCapStorage = __instance.PathingCaps;
+            }
+        }
 
         //Boost AI sensor and spotter range to prevent them from being exploited during combat.
         [HarmonyPatch(typeof(AbstractActor), "ResolveAttackSequence")]
