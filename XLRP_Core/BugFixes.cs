@@ -35,6 +35,24 @@ namespace XLRP_Core
         //    }
         //}
 
+        //Fix a bug with the Locust FP that would permanently disable the Black Market.
+        [HarmonyPatch(typeof(SimGameState), "Rehydrate")]
+        public static class SimGameState_Rehydrate_Patch
+        {
+            static void Postfix(SimGameState __instance, GameInstanceSave gameInstanceSave)
+            {
+                if (!__instance.CompanyTags.Contains("BTR_BugFix_LocustFPFixed") &&  __instance.CompanyTags.Contains("fp_legUp_kickingTheNest_Complete") && 
+                    !__instance.CompanyTags.Contains("company_blackMarket_ON"))
+                {
+                    if (__instance.CompanyTags.Contains("company_blackMarket_OFF"))
+                        __instance.CompanyTags.Remove("company_blackMarket_OFF");
+                }
+                if (!__instance.CompanyTags.Contains("BTR_BugFix_LocustFPFixed"))
+                    __instance.CompanyTags.Add("BTR_BugFix_LocustFPFixed");
+            }
+        }
+
+
         //Boost AI sensor and spotter range to prevent them from being exploited during combat.
         [HarmonyPatch(typeof(AbstractActor), "ResolveAttackSequence")]
         public static class AbstractActor_ResolveAttackSequence_Patch
