@@ -30,14 +30,14 @@ namespace XLRP_Core
         }
 
         //On game load.
-        [HarmonyPatch(typeof(SimGameState), "Rehydrate")]
-        public static class SimGameState_Rehydrate_Patch
-        {
-            static void Postfix(SimGameState __instance, GameInstanceSave gameInstanceSave)
-            {
-                DeserializeXXX();
-            }
-        }
+        //[HarmonyPatch(typeof(SimGameState), "Rehydrate")]
+        //public static class SimGameState_Rehydrate_Patch
+        //{
+        //    static void Postfix(SimGameState __instance, GameInstanceSave gameInstanceSave)
+        //    {
+        //        DeserializeXXX();
+        //    }
+        //}
 
         internal static void DeserializeXXX()
         {
