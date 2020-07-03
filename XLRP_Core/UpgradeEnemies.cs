@@ -67,6 +67,22 @@ namespace XLRP_Core.EnemySelection
                 if (!Core.Settings.UpgradeItems || actor.EncounterTags.Contains("Upgraded"))
                     continue;
 
+                if (actor.UnitType == UnitType.Mech)
+                {
+                    var mech = actor as Mech;
+                    var pilot = mech.GetPilot();
+                    var difficulty = team.Combat.ActiveContract.Override.finalDifficulty;
+                    if (difficulty <= 4)
+                        pilot.pilotDef.PilotTags.Add("PQ_pilot_green");
+                    if (difficulty <= 6)
+                        pilot.pilotDef.PilotTags.Add("PQ_pilot_regular");
+                    if (difficulty <= 8)
+                        pilot.pilotDef.PilotTags.Add("PQ_pilot_veteran");
+                    if (difficulty <= 10)
+                        pilot.pilotDef.PilotTags.Add("PQ_pilot_elite");
+                }
+
+
                 actor.EncounterTags.Add("Upgraded");
                 foreach (var foo in actor.allComponents)
                 {
