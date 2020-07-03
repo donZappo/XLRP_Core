@@ -39,6 +39,8 @@ namespace XLRP_Core
         public bool ObfuscateEventRequirements = false;
         public bool COIL_Heat_Multiply_EP = false;
         public bool Tagged_Called_Shots = false;
+        public bool NerfContractPayments = false;
+        public double NerfExponent = 0.9;
 
         //Old settings
         public float BulwarkMalus = -1f;

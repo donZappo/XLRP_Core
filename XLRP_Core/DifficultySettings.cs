@@ -17,7 +17,6 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(AbstractActor), "CreateSpawnEffectByTag", null)]
         public static class Armor_Upgrade
         {
-            // Token: 0x06000002 RID: 2 RVA: 0x000020AC File Offset: 0x000002AC
             private static void Prefix(AbstractActor __instance, ref string effectTag)
             {
                 if (Core.Settings.UpgradeDegradedOpFor &&  (effectTag == "spawn_poorly_maintained_50" || effectTag == "spawn_poorly_maintained_75"))
@@ -26,6 +25,17 @@ namespace XLRP_Core
                 }
             }
         }
+
+        //Nerf crazy scaling of payments from contracts.
+        [HarmonyPatch(typeof(SimGameState), "CalculateContractValueByContractType")]
+        public static class SimGameState_CalculateContractValueByContractType_Patch
+        {
+            public static void Postfix(int diff, ref int __result)
+            {
+                __result *= (int)Math.Pow(Core.Settings.NerfExponent, diff);
+            }
+        }
+
     }
 
 }
