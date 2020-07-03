@@ -33,7 +33,9 @@ namespace XLRP_Core
             public static void Postfix(int diff, ref int __result)
             {
                 if (Core.Settings.NerfContractPayments)
-                    __result *= (int)Math.Pow(Core.Settings.NerfExponent, diff);
+                {
+                    __result = (int)(__result * Math.Pow(Core.Settings.NerfExponent, diff));
+                }
             }
         }
 
