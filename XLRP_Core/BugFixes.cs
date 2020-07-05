@@ -60,10 +60,10 @@ namespace XLRP_Core
             public static void Prefix(AbstractActor __instance)
             {
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted") 
-                    && !__instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
-                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 750);
-                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 750);
+                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 800);
+                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 800);
                     __instance.EncounterTags.Add("BTR_SensorsAdjusted");
                 }
             }
