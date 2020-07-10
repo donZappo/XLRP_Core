@@ -74,11 +74,11 @@ namespace XLRP_Core.EnemySelection
                     var difficulty = team.Combat.ActiveContract.Override.finalDifficulty;
                     if (difficulty <= 4)
                         pilot.pilotDef.PilotTags.Add("PQ_pilot_green");
-                    if (difficulty <= 6)
+                    else if (difficulty <= 6)
                         pilot.pilotDef.PilotTags.Add("PQ_pilot_regular");
-                    if (difficulty <= 8)
+                    else if (difficulty <= 8)
                         pilot.pilotDef.PilotTags.Add("PQ_pilot_veteran");
-                    if (difficulty <= 10)
+                    else if (difficulty <= 10)
                         pilot.pilotDef.PilotTags.Add("PQ_pilot_elite");
                 }
 
