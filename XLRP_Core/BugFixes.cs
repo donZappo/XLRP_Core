@@ -62,8 +62,8 @@ namespace XLRP_Core
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted") 
                     && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
-                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 800);
-                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 800);
+                    __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
+                    __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
                     __instance.EncounterTags.Add("BTR_SensorsAdjusted");
                 }
             }
@@ -79,8 +79,8 @@ namespace XLRP_Core
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
                     && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
-                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 800);
-                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 800);
+                    __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
+                    __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
                     __instance.EncounterTags.Add("BTR_SensorsAdjusted");
                 }
             }
@@ -95,8 +95,8 @@ namespace XLRP_Core
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
                     && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
-                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 800);
-                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 800);
+                    __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
+                    __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
                     __instance.EncounterTags.Add("BTR_SensorsAdjusted");
                 }
             }
@@ -112,9 +112,23 @@ namespace XLRP_Core
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
                     && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
-                    __instance.StatCollection.Set<float>("SpotterDistanceAbsolute", 800);
-                    __instance.StatCollection.Set<float>("SensorDistanceAbsolute", 800);
+                    __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
+                    __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
                     __instance.EncounterTags.Add("BTR_SensorsAdjusted");
+                }
+            }
+        }
+
+        [HarmonyPatch(typeof(AbstractActor), "OnActivationEnd")]
+        public static class AbstractActor_OnActivationEnd_Patch
+        {
+            public static void Prefix(AbstractActor __instance)
+            {
+                if (Core.Settings.RemoveSpottingExploit && __instance.EncounterTags.Contains("BTR_SensorsAdjusted")
+                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                {
+                    __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 1);
+                    __instance.EncounterTags.Remove("BTR_SensorsAdjusted");
                 }
             }
         }
