@@ -264,5 +264,47 @@ namespace XLRP_Core
                 return codes.AsEnumerable();
             }
         }
+        
+        // automatically uninstalls any components installed in invalid locations (as a result of json editing and a saved mech)
+        [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
+        public class MechLabPanelLoadMechPatch
+        {
+            private static void Postfix(MechLabPanel __instance)
+            {
+                try
+                {
+                    var newMechDef = __instance.activeMechDef;
+                    var sim = UnityGameInstance.BattleTechGame.Simulation;
+                    var inventory = newMechDef?.Inventory;
+                    for (var index = 0; index < inventory?.Length; index++)
+                    {
+                        var mechComponentRef = inventory[index];
+                        if (mechComponentRef != null)
+                        {
+                            var loc = mechComponentRef.Def?.AllowedLocations & mechComponentRef.MountedLocation;
+                            if (loc != mechComponentRef.MountedLocation)
+                            {
+                                var componentInstallWorkOrder = sim.CreateComponentInstallWorkOrder(
+                                    newMechDef.GUID, mechComponentRef, ChassisLocations.None, mechComponentRef.MountedLocation);
+                                componentInstallWorkOrder.Parent = componentInstallWorkOrder;
+                                componentInstallWorkOrder.CBillCost = 0;
+                                sim.MoveWorkOrderItemsToQueue(componentInstallWorkOrder);
+                                __instance.pendingWorkOrders.Add(componentInstallWorkOrder);
+                                __instance.ApplyWorkOrder(componentInstallWorkOrder);
+                                __instance.DoConfirmRefit();
+                                var popup = GenericPopupBuilder.Create(GenericPopupType.Info, 
+                                    $"Component removed from invalid location and placed in storage.\n{mechComponentRef.Def.Description.Name} in {mechComponentRef.MountedLocation}");
+                                popup.AddButton("Understood");
+                                popup.Render();
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    FileLog.Log(ex.ToString());
+                }
+            }
+        }
     }
 }
