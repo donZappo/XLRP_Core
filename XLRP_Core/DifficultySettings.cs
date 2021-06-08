@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Harmony;
 using BattleTech;
-using UnityEngine;
-using BattleTech.Framework;
-using BattleTech.UI;
-using BattleTech.Save;
 
-namespace XLRP_Core
+namespace BTR_Core
 {
     class DifficultySettings
     {

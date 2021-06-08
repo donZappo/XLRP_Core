@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
 using Harmony;
 using BattleTech;
-using BattleTech.UI;
 
-namespace XLRP_Core
+namespace BTR_Core
 {
     //Make ejecting dangerous
    [HarmonyPatch(typeof(Pilot), "EjectPilot")]

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Harmony;
+﻿using Harmony;
 using BattleTech;
-using Localize;
 using BattleTech.UI;
 
-namespace XLRP_Core.SkillChanges
+namespace BTR_Core.SkillChanges
 {
     public static class CalledShotMods
     {

@@ -1,14 +1,7 @@
-﻿using System.IO;
-using System.Linq;
-using BattleTech;
-using BattleTech.Save.Test;
+﻿using BattleTech;
 using Harmony;
-using Newtonsoft.Json;
-using UnityEngine;
-using static XLRP_Core.Logger;
-using BattleTech.Save;
 
-namespace XLRP_Core
+namespace BTR_Core
 {
     public static class SaveHandling
     {

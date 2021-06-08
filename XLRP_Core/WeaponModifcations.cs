@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Harmony;
 using BattleTech;
-using UnityEngine;
 using BattleTech.UI;
 
-namespace XLRP_Core.NewTech
+namespace BTR_Core.NewTech
 {
     public static class COIL
     {

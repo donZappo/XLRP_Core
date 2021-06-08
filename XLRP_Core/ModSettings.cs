@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using BattleTech;
-
-
-namespace XLRP_Core
+﻿namespace BTR_Core
 {
     public class ModSettings
     {

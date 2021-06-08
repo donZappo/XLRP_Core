@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Harmony;
-using BattleTech;
-
-namespace Extended_CE.NewTech
+﻿namespace Extended_CE.NewTech
 {/*
     public static class ArtemisIV
     {

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Harmony;
-using UnityEngine;
-using BattleTech;
-using BattleTech.UI;
-
-namespace XLRP_Core.Weapons
+﻿namespace BTR_Core.Weapons
 {
     //This block of code here can be used to have COIL weapons show an indicator for how long it has been since they fired. 
     //[HarmonyPatch(typeof(CombatHUDWeaponSlot), "RefreshDisplayedWeapon")]

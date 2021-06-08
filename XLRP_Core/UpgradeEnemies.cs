@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Harmony;
 using HBS.Collections;
 using BattleTech;
 using BattleTech.Data;
 using BattleTech.Framework;
-using System.Text.RegularExpressions;
 
-namespace XLRP_Core.EnemySelection
+namespace BTR_Core.EnemySelection
 {
     public static class Upgrade_Equipment
     {

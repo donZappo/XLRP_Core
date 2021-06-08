@@ -2,12 +2,12 @@
 using System.IO;
 using System.Reflection;
 
-namespace XLRP_Core
+namespace BTR_Core
 {
     public static class Logger
     {
         internal static string LogFilePath =>
-            Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName + "\\Log.txt";
+            Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName + "/Log.txt";
 
         public static void Error(Exception ex)
         {

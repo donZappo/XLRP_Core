@@ -2,12 +2,10 @@
 using System.Collections;
 using System.Reflection;
 using Harmony;
+using static BTR_Core.Logger;
 using Newtonsoft.Json;
-using static XLRP_Core.Logger;
-using BattleTech;
-using BattleTech.UI;
 
-namespace XLRP_Core
+namespace BTR_Core
 {
     //public enum DifficultySetting
     //{
@@ -36,6 +34,7 @@ namespace XLRP_Core
 
             // blank the logfile
             Clear();
+            
             PrintObjectFields(Settings, "Settings");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }

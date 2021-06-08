@@ -1,23 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Harmony;
 using BattleTech;
-using UnityEngine;
-using BattleTech.Framework;
 using BattleTech.UI;
 using BattleTech.Save;
 using BattleTech.Data;
 using HBS.Collections;
 using System.Reflection.Emit;
 using System.Reflection;
-using CustomAmmoCategoriesPatches;
-using CustomAmmoCategoriesPathes;
 using CustAmmoCategories;
-using BestHTTP.SocketIO;
 
-namespace XLRP_Core
+namespace BTR_Core
 {
     class BugFixes_QoL
     {
@@ -41,12 +35,13 @@ namespace XLRP_Core
         {
             static void Postfix(SimGameState __instance, GameInstanceSave gameInstanceSave)
             {
-                if (!__instance.CompanyTags.Contains("BTR_BugFix_LocustFPFixed") &&  __instance.CompanyTags.Contains("fp_legUp_kickingTheNest_Complete") && 
+                if (!__instance.CompanyTags.Contains("BTR_BugFix_LocustFPFixed") && __instance.CompanyTags.Contains("fp_legUp_kickingTheNest_Complete") &&
                     !__instance.CompanyTags.Contains("company_blackMarket_ON"))
                 {
                     if (__instance.CompanyTags.Contains("company_blackMarket_OFF"))
                         __instance.CompanyTags.Remove("company_blackMarket_OFF");
                 }
+
                 if (!__instance.CompanyTags.Contains("BTR_BugFix_LocustFPFixed"))
                     __instance.CompanyTags.Add("BTR_BugFix_LocustFPFixed");
             }
@@ -59,8 +54,8 @@ namespace XLRP_Core
         {
             public static void Prefix(AbstractActor __instance)
             {
-                if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted") 
-                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
+                                                        && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
                     __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
                     __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
@@ -73,11 +68,10 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(Mech), "ResolveAttackSequence")]
         public static class Mech_ResolveAttackSequence_Patch
         {
-
             public static void Prefix(Mech __instance)
             {
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
-                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                                                        && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
                     __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
                     __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
@@ -89,11 +83,10 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(Vehicle), "ResolveAttackSequence")]
         public static class Vehicle_ResolveAttackSequence_Patch
         {
-
             public static void Prefix(Vehicle __instance)
             {
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
-                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                                                        && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
                     __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
                     __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
@@ -106,11 +99,10 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(Turret), "ResolveAttackSequence")]
         public static class Turret_ResolveAttackSequence_Patch
         {
-
             public static void Prefix(Turret __instance)
             {
                 if (Core.Settings.RemoveSpottingExploit && !__instance.EncounterTags.Contains("BTR_SensorsAdjusted")
-                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                                                        && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
                     __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 2);
                     __instance.StatCollection.Set<float>("SensorDistanceMultiplier", 2);
@@ -125,7 +117,7 @@ namespace XLRP_Core
             public static void Prefix(AbstractActor __instance)
             {
                 if (Core.Settings.RemoveSpottingExploit && __instance.EncounterTags.Contains("BTR_SensorsAdjusted")
-                    && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
+                                                        && __instance.team.IsEnemy(__instance.Combat.LocalPlayerTeam))
                 {
                     __instance.StatCollection.Set<float>("SpotterDistanceMultiplier", 1);
                     __instance.EncounterTags.Remove("BTR_SensorsAdjusted");
@@ -164,7 +156,7 @@ namespace XLRP_Core
 
 
         //PathNodeGrid.BuildPathNetwork AbstractActor.IsFriendly throws a million NREs
-            [HarmonyPatch(typeof(AbstractActor), "IsFriendly")]
+        [HarmonyPatch(typeof(AbstractActor), "IsFriendly")]
         public static class AbstractActor_IsFriendly_Patch
         {
             public static bool Prefix(AbstractActor __instance, ICombatant target)
@@ -177,12 +169,13 @@ namespace XLRP_Core
                     }
                     catch { return false; }
                 }
+
                 return true;
             }
         }
 
         //__instance will show that requirements are not met for the events, but not say what exactly they are.
-            [HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
+        [HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
         public static class SimGameInterruptManager_QueueEventPopup_Patch
         {
             public static void Prefix(ref SimGameEventDef evt)
@@ -209,6 +202,7 @@ namespace XLRP_Core
                         if (pilot.Name == unitResult.pilot.Name)
                             MakeImmortal = false;
                     }
+
                     if (MakeImmortal)
                         Traverse.Create(unitResult.pilot.pilotDef).Property("IsImmortal").SetValue(true);
                 }
@@ -221,7 +215,7 @@ namespace XLRP_Core
         {
             static void Prefix(Mech __instance, ref float damageAmount)
             {
-                if(damageAmount < 0f)
+                if (damageAmount < 0f)
                 {
                     damageAmount = 0f;
                 }
@@ -247,20 +241,25 @@ namespace XLRP_Core
         [HarmonyPatch(typeof(SGEngineeringScreen), "PopulateUpgradeDictionary")]
         public static class SGEngineeringScreen_PopulateUpgradeDictionary_Patch
         {
-            static bool Prepare() { return Core.Settings.ShowAllArgoUpgrades; }
+            static bool Prepare()
+            {
+                return Core.Settings.ShowAllArgoUpgrades;
+            }
+
             public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
                 var codes = instructions.ToList();
                 var targetMethod = AccessTools.Method(typeof(ShipModuleUpgrade), "get_RequiredModules");
                 // want 2nd and final occurence of targetMethod
                 var index = codes.FindIndex(c =>
-                    c == codes.Last(x => x.opcode == OpCodes.Callvirt && (MethodInfo)x.operand == targetMethod));
+                    c == codes.Last(x => x.opcode == OpCodes.Callvirt && (MethodInfo) x.operand == targetMethod));
                 // nop out the instructions for the 2nd conditional
                 // && __instance.simState.HasShipUpgrade(shipModuleUpgrade2.RequiredModules, list)
                 for (var i = -3; i < 4; i++)
                 {
                     codes[index + i].opcode = OpCodes.Nop;
                 }
+
                 return codes.AsEnumerable();
             }
         }
@@ -304,6 +303,45 @@ namespace XLRP_Core
                 {
                     FileLog.Log(ex.ToString());
                 }
+                
+                // non-working prototype to display the view distance on the mechlab based on equipped rangefinder
+                //FileLog.Log("PING");
+                //LocalizableText component = ___obj_mech.FindFirstChildNamed("uixPrfPanl_ML_main-Widget(Clone)").FindFirstChildNamed("Centerline").FindFirstChildNamed("uixPrfPanl_ML_location-Widget-MANAGED")
+                //    .FindFirstChildNamed("txt_location")
+                //    .GetComponent<LocalizableText>();
+                //FileLog.Log(component.text);
+                //IEnumerable<MechComponentRef> enumerable = ___activeMechInventory.Where((MechComponentRef x) => x.Def.statusEffects.Any((EffectData y) => y.statisticData.statName == "SpotterDistanceAbsolute"));
+                //float num = 0f;
+                //FileLog.Log("Rangefinders: " + enumerable.Count());
+                //foreach (MechComponentRef item in enumerable)
+                //{
+                //    StatisticEffectData statisticData = item.Def.statusEffects.First((EffectData x) => x.statisticData.statName == "SpotterDistanceAbsolute").statisticData;
+                //    StatCollection.StatOperation operation = statisticData.operation;
+                //    FileLog.Log(operation.ToString());
+                //    int num2 = Convert.ToInt32(statisticData.modValue);
+                //    FileLog.Log(num2.ToString());
+                //    switch (operation)
+                //    {
+                //        case StatCollection.StatOperation.Float_Add:
+                //            num += (float)num2;
+                //            break;
+                //        case StatCollection.StatOperation.Float_Subtract:
+                //            num -= (float)num2;
+                //            break;
+                //    }
+                //}
+                //FileLog.Log(num.ToString());
+                //string arg = null;
+                //if (num > 0f)
+                //{
+                //    arg = $"+{num}m";
+                //}
+                //else if (num < 0f)
+                //{
+                //    arg = $"-{num}m";
+                //}
+                //component.SetText($"{component} {arg}");
+
             }
         }
     }
