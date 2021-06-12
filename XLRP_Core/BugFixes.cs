@@ -47,7 +47,6 @@ namespace BTR_Core
             }
         }
 
-
         //Boost AI sensor and spotter range to prevent them from being exploited during combat.
         [HarmonyPatch(typeof(AbstractActor), "ResolveAttackSequence")]
         public static class AbstractActor_ResolveAttackSequence_Patch
@@ -63,7 +62,6 @@ namespace BTR_Core
                 }
             }
         }
-
 
         [HarmonyPatch(typeof(Mech), "ResolveAttackSequence")]
         public static class Mech_ResolveAttackSequence_Patch
@@ -125,7 +123,6 @@ namespace BTR_Core
             }
         }
 
-
         ////Why are melee attacks against vehicles not increasing? It appears to have been removed with CAC. Welcome back! 
         [HarmonyPatch(typeof(AdvWeaponHitInfoRec), "Apply")]
         public static class AdvWeaponHitInfoRec_Apply_Patch
@@ -143,7 +140,6 @@ namespace BTR_Core
             }
         }
 
-
         //Mech blue portraits in combat stick around if free sensor lock is enabled. 
         [HarmonyPatch(typeof(CombatHUDMechwarriorTray), "ShowMoraleBackground")]
         public static class CombatHUDMechwarriorTray_ShowMoraleBackground_Patch
@@ -153,7 +149,6 @@ namespace BTR_Core
                 show = false;
             }
         }
-
 
         //PathNodeGrid.BuildPathNetwork AbstractActor.IsFriendly throws a million NREs
         [HarmonyPatch(typeof(AbstractActor), "IsFriendly")]
@@ -175,17 +170,17 @@ namespace BTR_Core
         }
 
         //__instance will show that requirements are not met for the events, but not say what exactly they are.
-        [HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
-        public static class SimGameInterruptManager_QueueEventPopup_Patch
-        {
-            public static void Prefix(ref SimGameEventDef evt)
-            {
-                //if (Core.Settings.ObfuscateEventRequirements)
-                //    Traverse.Create(evt)
-                //        .Property("Options")
-                //        .SetValue(evt.Options.Where(o => o.RequirementList.Length == 0).ToArray());
-            }
-        }
+        //[HarmonyPatch(typeof(SimGameInterruptManager), "QueueEventPopup")]
+        //public static class SimGameInterruptManager_QueueEventPopup_Patch
+        //{
+        //    public static void Prefix(ref SimGameEventDef evt)
+        //    {
+        //        //if (Core.Settings.ObfuscateEventRequirements)
+        //        //    Traverse.Create(evt)
+        //        //        .Property("Options")
+        //        //        .SetValue(evt.Options.Where(o => o.RequirementList.Length == 0).ToArray());
+        //    }
+        //}
 
 
         // Fix for PC controlled NPC pilots that die during Flashpoints such as Fangerholm and Kell
@@ -263,7 +258,7 @@ namespace BTR_Core
                 return codes.AsEnumerable();
             }
         }
-        
+
         // automatically uninstalls any components installed in invalid locations (as a result of json editing and a saved mech)
         [HarmonyPatch(typeof(MechLabPanel), "LoadMech")]
         public class MechLabPanelLoadMechPatch
@@ -291,7 +286,7 @@ namespace BTR_Core
                                 __instance.pendingWorkOrders.Add(componentInstallWorkOrder);
                                 __instance.ApplyWorkOrder(componentInstallWorkOrder);
                                 __instance.DoConfirmRefit();
-                                var popup = GenericPopupBuilder.Create(GenericPopupType.Info, 
+                                var popup = GenericPopupBuilder.Create(GenericPopupType.Info,
                                     $"Component removed from invalid location and placed in storage.\n{mechComponentRef.Def.Description.Name} in {mechComponentRef.MountedLocation}");
                                 popup.AddButton("Understood");
                                 popup.Render();
@@ -303,7 +298,7 @@ namespace BTR_Core
                 {
                     FileLog.Log(ex.ToString());
                 }
-                
+
                 // non-working prototype to display the view distance on the mechlab based on equipped rangefinder
                 //FileLog.Log("PING");
                 //LocalizableText component = ___obj_mech.FindFirstChildNamed("uixPrfPanl_ML_main-Widget(Clone)").FindFirstChildNamed("Centerline").FindFirstChildNamed("uixPrfPanl_ML_location-Widget-MANAGED")
@@ -341,7 +336,6 @@ namespace BTR_Core
                 //    arg = $"-{num}m";
                 //}
                 //component.SetText($"{component} {arg}");
-
             }
         }
     }
