@@ -15,6 +15,63 @@ namespace BTR_Core
 {
     class BugFixes_QoL
     {
+        [HarmonyPatch(typeof(Shop), "OnItemCollectionRetrieved")]
+        public class ShopOnItemCollectionRetrievedHackFixPatch
+        {
+            public static bool Prefix(Shop __instance, ItemCollectionDef def)
+            {
+                if (def == null)
+                {
+                    Logger.Log($"{__instance.system.Name} has invalid ItemCollectionDef.");
+                }
+
+                return def != null;
+            }
+        }
+        
+        [HarmonyPatch(typeof(ListElementController_InventoryWeapon_NotListView), "RefreshQuantity")]
+        public static class Bug_Tracing_Fix
+        {
+            static bool Prefix(ListElementController_InventoryWeapon_NotListView __instance, InventoryItemElement_NotListView theWidget)
+            {
+                try
+                {
+                    if (__instance.quantity == -2147483648)
+                    {
+                        theWidget.qtyElement.SetActive(false);
+                        return false;
+                    }
+
+                    theWidget.qtyElement.SetActive(true);
+                    theWidget.quantityValue.SetText("{0}", __instance.quantity);
+                    theWidget.quantityValueColor.SetUIColor(__instance.quantity > 0 || __instance.quantity == int.MinValue ? UIColor.White : UIColor.Red);
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    Logger.Log("*****Exception thrown with ListElementController_InventoryWeapon_NotListView");
+                    Logger.Log($"theWidget null: {theWidget == null}");
+                    Logger.Log($"theWidget.qtyElement null: {theWidget.qtyElement == null}");
+                    Logger.Log($"theWidget.quantityValue null: {theWidget.quantityValue == null}");
+                    Logger.Log($"theWidget.quantityValueColor null: {theWidget.quantityValueColor == null}");
+                    if (theWidget.itemName != null)
+                    {
+                        Logger.Log("theWidget.itemName");
+                        Logger.Log(theWidget.itemName.ToString());
+                    }
+
+                    if (__instance.GetName() != null)
+                    {
+                        Logger.Log("__instance.GetName");
+                        Logger.Log(__instance.GetName());
+                    }
+
+                    Logger.Log(e);
+                    return false;
+                }
+            }
+        }
+
         ////Slight bug fix for Pathing Grid errors.
         //[HarmonyPatch(typeof(Pathing), "ResetPathGridIfTouching")]
         //public static class Logging_ResetPathGridIfTouching_Patch

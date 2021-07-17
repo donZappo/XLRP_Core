@@ -29,11 +29,11 @@ namespace BTR_Core
             }
         }
 
-        public static void Log(string line)
+        public static void Log(object line)
         {
             using (var writer = new StreamWriter(LogFilePath, true))
             {
-                writer.WriteLine(line);
+                writer.WriteLine(line.ToString());
             }
         }
 
